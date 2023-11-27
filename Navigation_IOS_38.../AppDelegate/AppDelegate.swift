@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Navigation_IOS_38...
+//  Navigation_IOS_38_Ganbarova
 //
-//  Created by Aysel on 26.11.2023.
+//  Created by Aysel on 05.10.2023.
 //
 
 import UIKit
@@ -33,4 +33,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
