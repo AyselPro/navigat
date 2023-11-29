@@ -118,6 +118,7 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         setupConstraints()
         addSubViews()
+        logInButtonSuccessed()
         
     }
     
@@ -186,88 +187,86 @@ class LogInViewController: UIViewController {
         alert.addAction(ok)
         present(alert, animated: true)
     }
+    
+    private func errorCatched(error : String, errorMessage: String) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: error, message: errorMessage, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ОК...", style: .default) { _ in
+                print(error)
+            }
+            alertController.addAction(okAction)
+            
+        }
+    }
+    
+    // MARK: Log In Logic
+    private func logInButtonSuccessed() {
+        
+        let typedLogin = emailTextField.text
+        let typedPassword = passwordTextField.text ?? ""
+#if DEBUG
+        var userService = TestUserService()
+#else
+        let userService = CurrentUserService()
+        
+        if let existingUserLogin = typedLogin {
+            let profileViewController = ProfileViewController(userService: userService, typedLogin: existingUserLogin)
+            do {
+                let currentUser = try userService.currentUser(login: existingUserLogin)
+                
+                if currentUser.avatar != UIImage() {
+                    
+                    let currentMoment = Date()
+                    guard let checkedLogin = typedLogin else {
+                        preconditionFailure()
+                    }
+                    
+                    let typedInfo = checkedLogin + "\(currentMoment.hashValue)" + typedPassword
+                    
+                    if checkMyPass(typedInfo, time: currentMoment) {
+                        navigationController?.pushViewController(profileViewController, animated: true)
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        let alertController = UIAlertController(title: "Неверный пароль", message: "Побробуйте ещё раз", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "ОК", style: .default) { _ in
+                            print("Wrong password")
+                        }
+                        
+                        alertController.addAction(okAction)
+                        
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            } catch let error {
+                let error = "User not found on the server"
+                self.errorCatched(error: error, errorMessage: "Something went wrong on the server side. Please, try to log in again")
+            } catch {
+                let error = "Unknown error"
+                self.errorCatched(error: error, errorMessage: "Something went wrong. Please, reload the app")
+            }
+            
+        }
+#endif
+    }
 }
-
-//private func errorCatched(error : String, errorMessage: String) {
-//    DispatchQueue.main.async {
-//        let alertController = UIAlertController(title: error, message: errorMessage, preferredStyle: .alert)
-//        let okAction = UIAlertAction(title: "ОК...", style: .default) { _ in
-//            print(error)
-//        }
-//        alertController.addAction(okAction)
-//
-//    }
-//}
-
-// MARK: Log In Logic
-//private func logInButtonSuccessed() {
-//
-//#if DEBUG
-//    let userService = TestUserService()
-//    let profileViewController = ProfileViewController(userService: userService, typedLogin: userService.testUser.userLogin)
-//
-//#else
-//    let userService = CurrentUserService()
-//
-//    if let existingUserLogin = typedLogin {
-//        let profileViewController = ProfileViewController(userService: userService, typedLogin: existingUserLogin)
-//        do {
-//            let currentUser = try userService.currentUser(userLogin: existingUserLogin)
-//
-//            if currentUser.userAvatar != UIImage() {
-//
-//                let currentMoment = Date()
-//                guard let checkedLogin = typedLogin else {
-//                    preconditionFailure()
-//                }
-//
-//                let typedInfo = checkedLogin + "\(currentMoment.hashValue)" + typedPassword
-//
-//                if checkMyPass(typedInfo, time: currentMoment) {
-//                    navigationController?.pushViewController(profileViewController, animated: true)
-//                    return
-//                }
-//
-//                DispatchQueue.main.async {
-//                    let alertController = UIAlertController(title: "Неверный пароль", message: "Побробуйте ещё раз", preferredStyle: .alert)
-//                    let okAction = UIAlertAction(title: "ОК", style: .default) { _ in
-//                        print("Wrong password")
-//                    }
-//
-//                    alertController.addAction(okAction)
-//
-//                    self.present(alertController, animated: true, completion: nil)
-//                }
-//            }
-//        } catch LoginError.serverError {
-//            let error = "User not found on the server"
-//            self.errorCatched(error: error, errorMessage: "Something went wrong on the server side. Please, try to log in again")
-//        } catch {
-//            let error = "Unknown error"
-//            self.errorCatched(error: error, errorMessage: "Something went wrong. Please, reload the app")
-//        }
-//
-//    }
-//#endif
-//}
-//
-//class LoginInspector: LogInViewControllerDelegate {
-//
-//    func checkLoginAndPassword(stringToCheck: String, currenTime: Date) -> Bool {
-//        return Checker.shared.check(loginPasswordAYSEL30: stringToCheck, time: currenTime)
-//    }
-//
-//}
-//
-//protocol LogInFactory {
-//    func setLogInInspector() -> LoginInspector
-//}
-//
-//struct MyLogInFactory: LogInFactory {
-//    private let inspector3000 = LoginInspector()
-//
-//    func setLogInInspector() -> LoginInspector {
-//        return inspector3000
-//    }
-//}
-//
+    class LoginInspector: LogInViewControllerDelegate {
+        
+        func checkLoginAndPassword(stringToCheck: String, currenTime: Date) -> Bool {
+            return Checker.shared.check(loginPasswordAYSEL30: stringToCheck, time: currenTime)
+        }
+    }
+    
+    protocol LogInFactory {
+        func setLogInInspector() -> LoginInspector
+    }
+    
+    struct MyLogInFactory: LogInFactory {
+        private let inspector3000 = LoginInspector()
+        
+        func setLogInInspector() -> LoginInspector {
+            return inspector3000
+        }
+    }
+      
