@@ -9,11 +9,31 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
-class PhotosViewController: UIViewController {
+class PhotosViewController: UIViewController, ImageLibrarySubscriber, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageCollection.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        let photo = imageCollection[indexPath.row]
+        
+        cell.photo = photo
+        
+        return cell
+    }
+    
+    func receive(images: [UIImage]) {
+        self.imageCollection = images
+    }
     
     var imagePublisherFacade: ImagePublisherFacade?
     
-    var images: [String] = []
+    private var imageCollection: [UIImage] = []
     private let spasing = 8.0
     private let count = 3.0
     
@@ -26,10 +46,27 @@ class PhotosViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: spasing, left: spasing, bottom: spasing, right: spasing)
         
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
         return collectionView
     }()
     
+    //repeatCount(_:autoreverses:)
+    func addImagesWithTimer(iv: UIImageView) {
+        let addImagesWithTimer:CABasicAnimation = CABasicAnimation(keyPath: "position")
+        addImagesWithTimer.repeatCount = 10
+        addImagesWithTimer.autoreverses = true
+        addImagesWithTimer.speed = 0.5
+        
+        var from_point:CGPoint = CGPointMake(iv.center.x - 5, iv.center.y)
+        var from_value:NSValue = NSValue(cgPoint: from_point)
+        
+        var to_point:CGPoint = CGPointMake(iv.center.x + 5, iv.center.y)
+        var to_value:NSValue = NSValue(cgPoint: to_point)
+        
+        addImagesWithTimer.fromValue = from_value
+        addImagesWithTimer.toValue = to_value
+        iv.layer.add(addImagesWithTimer, forKey: "position")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +75,8 @@ class PhotosViewController: UIViewController {
         setupView()
         navigationController?.navigationBar.isHidden = false
         navigationItem.title = "Photo Gallery"
+        
+        imagePublisherFacade?.subscribe(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,38 +96,48 @@ class PhotosViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
-}
-
-//MARK: - Extensions
-extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        let value = images[indexPath.item]
-        cell.setupView(image: value)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let fullSpasing = (count + 1) * spasing // 32
-        let widthCollectionView = collectionView.bounds.width
-        let width = (widthCollectionView - fullSpasing) / count
-        
-        return CGSize(width: width, height: width)
-    }
-
-}
-
-extension PhotosViewController: ImageLibrarySubscriber {
     
-    func receive(images: [UIImage]) {
-      //  self.images = images
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = true
     }
-
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        collectionView.frame = CGRect(
+            x: view.safeAreaInsets.left,
+            y: view.safeAreaInsets.top,
+            width: view.frame.width,
+            height: view.frame.height - view.safeAreaInsets.top
+        )
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        imagePublisherFacade?.removeSubscription(for: self)
+        imagePublisherFacade?.rechargeImageLibrary()
+    }
+    
 }
+
+protocol ObserverProtocol: AnyObject {
+    var observations: [NSKeyValueObservation] {get set}
+    func removeAllObservation()
+}
+
+//тот кто наблюдает за событием
+final class Observer: ObserverProtocol {
+    func removeAllObservation() {
+        observations.removeAll()
+    }
+    
+    var observations: [NSKeyValueObservation] = []
+    
+    static let shared = Observer()
+    private init() {}
+    
+}
+
+
+

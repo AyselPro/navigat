@@ -26,7 +26,7 @@
 		F9F65CDF2B12AE5200F98457 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CDE2B12AE5200F98457 /* PostTableViewCell.swift */; };
 		F9F65CE12B12AE8D00F98457 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CE02B12AE8D00F98457 /* PhotosTableViewCell.swift */; };
 		F9F65CE32B12AEB500F98457 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CE22B12AEB500F98457 /* PhotoTableViewCell.swift */; };
-		F9F65CE52B12AEEA00F98457 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CE42B12AEEA00F98457 /* PhotoCollectionViewCell.swift */; };
+		F9F65CE52B12AEEA00F98457 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CE42B12AEEA00F98457 /* PhotosCollectionViewCell.swift */; };
 		F9F65CE82B12AF9800F98457 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CE72B12AF9800F98457 /* PostViewController.swift */; };
 		F9F65CEA2B12AFC100F98457 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CE92B12AFC100F98457 /* InfoViewController.swift */; };
 		F9F65CEC2B12AFDF00F98457 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CEB2B12AFDF00F98457 /* FeedViewController.swift */; };
@@ -85,7 +85,7 @@
 		F9F65CDE2B12AE5200F98457 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		F9F65CE02B12AE8D00F98457 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		F9F65CE22B12AEB500F98457 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
-		F9F65CE42B12AEEA00F98457 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		F9F65CE42B12AEEA00F98457 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		F9F65CE72B12AF9800F98457 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		F9F65CE92B12AFC100F98457 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		F9F65CEB2B12AFDF00F98457 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 				F9F65CDE2B12AE5200F98457 /* PostTableViewCell.swift */,
 				F9F65CE02B12AE8D00F98457 /* PhotosTableViewCell.swift */,
 				F9F65CE22B12AEB500F98457 /* PhotoTableViewCell.swift */,
-				F9F65CE42B12AEEA00F98457 /* PhotoCollectionViewCell.swift */,
+				F9F65CE42B12AEEA00F98457 /* PhotosCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -371,7 +371,7 @@
 				F97A0FAB2B12A33F00B1B35C /* ViewController.swift in Sources */,
 				F9F65CF52B12B07700F98457 /* ProfileHeaderView.swift in Sources */,
 				F9F65CBE2B12A51100F98457 /* Checker.swift in Sources */,
-				F9F65CE52B12AEEA00F98457 /* PhotoCollectionViewCell.swift in Sources */,
+				F9F65CE52B12AEEA00F98457 /* PhotosCollectionViewCell.swift in Sources */,
 				F97A0FA72B12A33F00B1B35C /* AppDelegate.swift in Sources */,
 				F9F65CBA2B12A43600F98457 /* CurrentUserService.swift in Sources */,
 				F9F65CC32B12A56E00F98457 /* User.swift in Sources */,

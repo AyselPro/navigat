@@ -1,5 +1,5 @@
 //
-//  PhotoCollectionViewCell.swift
+//  PhotosCollectionViewCell.swift
 //  Navigation_IOS_38_Ganbarova
 //
 //  Created by Aysel on 05.10.2023.
@@ -8,7 +8,14 @@
 import UIKit
 import StorageService
 
-final class PhotoCollectionViewCell: UICollectionViewCell {
+final class PhotosCollectionViewCell: UICollectionViewCell {
+    
+    var photo: UIImage? {
+            didSet {
+               photoImageView.image = photo
+            }
+        }
+
     private var photoImageView:UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
@@ -25,13 +32,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    func setupView(image: String) {
-        photoImageView.image = UIImage(named: image)
-    }
-    
-    
+
     private func setupCellEndConstraints() {
         contentView.addSubview(photoImageView)
         photoImageView.translatesAutoresizingMaskIntoConstraints = false

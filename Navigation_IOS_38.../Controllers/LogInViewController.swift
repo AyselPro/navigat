@@ -237,7 +237,7 @@ class LogInViewController: UIViewController {
                     }
                     
                     DispatchQueue.main.async {
-                        let alertController = UIAlertController(title: "Неверный пароль", message: "Побробуйте ещё раз", preferredStyle: .alert)
+                        let alertController = UIAlertController(title: "Неверный пароль", message: "Попробуйте ещё раз", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "ОК", style: .default) { _ in
                             print("Wrong password")
                         }
