@@ -9,7 +9,7 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileViewController: UIViewController {
     
     private let profileHeaderView: ProfileHeaderView = ProfileHeaderView()
     private var posts = Post.posts
@@ -23,6 +23,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     private var login: String { return user.login }
     
     private lazy var tableView = UITableView(frame: view.bounds, style: .grouped)
+    
+    private let facade = ImagePublisherFacade()
     
     var collection: [UIImage] = []
     
@@ -40,6 +42,74 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         return avatarImageView
     }()
+    
+    
+    
+    // MARK: - Init
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Functions
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.avatarImageView.image = user.avatar
+        view.backgroundColor = .lightGray
+        setupTableView()
+        
+        //TODO: установить таблицу по констрейнтам
+        setupConstraints()
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        avatarImageView.layer.cornerRadius = view.bounds.width * 0.3 / 2
+        
+    }
+    
+    private func setupTableView() {
+        navigationController?.tabBarController?.tabBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
+        
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset.right = 15
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsSelection = false
+    }
+    
+    private func setupConstraints() {
+        //TODO: Добавить таблицу и установить констрейнты
+        view.addSubviews(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
+    
+}
+
+
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -60,115 +130,25 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    // MARK: - Init
-    init(user: User) {
-        self.user = user
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Functions
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        check(user: login)
-        
-        self.avatarImageView.image = user.avatar
-        
-#if DEBUG
-        view.backgroundColor = .systemRed
-#else
-        view.backgroundColor = .systemGray6
-#endif
-        setupTableView()
-        setupGesture()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        avatarImageView.layer.cornerRadius = view.bounds.width * 0.3 / 2
-        
-    }
-    
-    private func setupTableView() {
-        navigationController?.tabBarController?.tabBar.isHidden = false
-        navigationController?.navigationBar.isHidden = true
-
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: String(describing: PhotosTableViewCell.self))
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: reusedID)
-        //tableView.register(
-                 //  ProfileHeaderView.self,
-                   // forHeaderFooterViewReuseIdentifier: String(describing: ProfileHeaderView.self)
-               // )
-       tableView.dataSource = self
-       tableView.delegate = self
-    }
-    
-    private func check(user: String) {
-        do {
-            self.user = User(login: "Aysel1994", firstName: "Aysel", avatar: UIImage(), status: "живая")
-            let user = self.user
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if (indexPath.section == 0) {
             
-        } catch let error {
-            let text = error.localizedDescription
-                
-                DispatchQueue.main.async { [self] in
-                    let alertController = UIAlertController(title: text, message: "Something went wrong on the server side. Please, try to log in again", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "ОК...", style: .default) { _ in
-                        print(error)
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                    alertController.addAction(okAction)
-                    
-                    present(alertController, animated: true, completion: nil)
+            let photoCollectionViewController = PhotosViewController()
+                        
+            Post.posts.forEach {
+                collection.append(UIImage(imageLiteralResourceName: $0.image))
                 }
-            }
-        }
-    
-    // MARK: Setup Gestures
-    private func setupGesture() {
-        // Tap on AvatarImage Gesture
-        let tapOnAvatarImageGusture = UITapGestureRecognizer(target: self, action: #selector(tapOnAvatarImage))
-        profileHeaderView.addGestureRecognizer(tapOnAvatarImageGusture)
-        profileHeaderView.isUserInteractionEnabled = true
-    }
-    
-    @objc func tapOnAvatarImage() {
-        print("You tapped avatar image")
-        if animationWasShownMark {
-            avatarImageView.alpha = 1
-            avatarImageView.isUserInteractionEnabled = false
-        } else {
-            print("!!!SOMETHING IS WRONG!!!")
-            avatarImageView.isUserInteractionEnabled = true
-        }
-        
-        //MARK: UITableViewDataSource and UITableViewDelegate
-        
-        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            let profileHeaderView = self.profileHeaderView
-        
-            return profileHeaderView
-        }
-        
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            if (indexPath.section == 0) {
-                
-                let photoCollectionViewController = PhotosViewController()
-            }
-            
-            func numberOfSections(in tableView: UITableView) -> Int {
-                return 2
-            }
-            
-            func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-                if section == 0 { return UITableView.automaticDimension }
-                return 0
-            }
-        }
-    }
+                        
+                photoCollectionViewController.imagePublisherFacade = facade
+                        
+                photoCollectionViewController.imagePublisherFacade?.addImagesWithTimer(time: 0.5, repeat: 10, userImages: collection)
+                        
+                navigationController?.pushViewController(photoCollectionViewController, animated: true)
+                } else {
+                    return
+                }
+         }
 }
+
+

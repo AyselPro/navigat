@@ -9,7 +9,7 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
-class PhotosViewController: UIViewController, ImageLibrarySubscriber, UICollectionViewDataSource, UICollectionViewDelegate {
+class PhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageCollection.count
@@ -25,10 +25,6 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber, UICollecti
         cell.photo = photo
         
         return cell
-    }
-    
-    func receive(images: [UIImage]) {
-        self.imageCollection = images
     }
     
     var imagePublisherFacade: ImagePublisherFacade?
@@ -49,24 +45,6 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber, UICollecti
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
         return collectionView
     }()
-    
-    //repeatCount(_:autoreverses:)
-    func addImagesWithTimer(iv: UIImageView) {
-        let addImagesWithTimer:CABasicAnimation = CABasicAnimation(keyPath: "position")
-        addImagesWithTimer.repeatCount = 10
-        addImagesWithTimer.autoreverses = true
-        addImagesWithTimer.speed = 0.5
-        
-        var from_point:CGPoint = CGPointMake(iv.center.x - 5, iv.center.y)
-        var from_value:NSValue = NSValue(cgPoint: from_point)
-        
-        var to_point:CGPoint = CGPointMake(iv.center.x + 5, iv.center.y)
-        var to_value:NSValue = NSValue(cgPoint: to_point)
-        
-        addImagesWithTimer.fromValue = from_value
-        addImagesWithTimer.toValue = to_value
-        iv.layer.add(addImagesWithTimer, forKey: "position")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,23 +99,31 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber, UICollecti
     
 }
 
-protocol ObserverProtocol: AnyObject {
-    var observations: [NSKeyValueObservation] {get set}
-    func removeAllObservation()
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        self.imageCollection = images
+    }
+
 }
 
+//protocol ObserverProtocol: AnyObject {
+//    var observations: [NSKeyValueObservation] {get set}
+ //   func removeAllObservation()
+//}
+
 //тот кто наблюдает за событием
-final class Observer: ObserverProtocol {
-    func removeAllObservation() {
-        observations.removeAll()
-    }
+//final class Observer: ObserverProtocol {
+ //   func removeAllObservation() {
+    //    observations.removeAll()
+  //  }
     
-    var observations: [NSKeyValueObservation] = []
+  //  var observations: [NSKeyValueObservation] = []
     
-    static let shared = Observer()
-    private init() {}
+ //   static let shared = Observer()
+ //   private init() {}
     
-}
+//}
 
 
 

@@ -10,7 +10,7 @@ import SnapKit
 import  iOSIntPackage
 
 class ViewController: UIViewController {
-
+    
         override func viewDidLoad() {
             super.viewDidLoad()
             initialize()
@@ -99,19 +99,8 @@ class ViewController: UIViewController {
             let LogInViewController = LogInViewController()
             navigationController?.pushViewController(LogInViewController, animated: true)
         }
-        
-    //extension ViewController: LogInViewControllerDelegate {
-      //  func checkLoginAndPassword(stringToCheck: String, currenTime: Date) -> Bool
-            //print(#function)
-     //   }
-        
-        
-        
-        
-        
-        
-        
-        
+      
+    
 }    /*
          // MARK: - Navigation
          
