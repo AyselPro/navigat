@@ -30,9 +30,9 @@ final class TextField: UITextField {
     }
     
     @objc private func textPrinted() {
-           guard let text = text, !text.isEmpty else { return }
-           newText?(text)
-       }
+        guard let text = text, !text.isEmpty else { return }
+        newText?(text)
+    }
     
     private lazy var checkGuessButton: UIButton = {
         let button = UIButton()

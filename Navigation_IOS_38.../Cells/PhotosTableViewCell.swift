@@ -64,10 +64,10 @@ final class PhotosTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-
+            
             chevronImageView.centerYAnchor.constraint(equalTo: label.centerYAnchor),
             chevronImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-
+            
             stackView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 12),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),

@@ -117,7 +117,7 @@ final class LogInViewController: UIViewController {
             }
             let profileViewController = ProfileViewController(user: user)
             self.navigationController?.pushViewController(profileViewController, animated: true)
-
+            
         } else {
             //авторизация не прошла удачно
             errorAuth()

@@ -12,10 +12,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     //    private let loginFactory = MyLogInFactory()
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let scene = (scene as? UIWindowScene) else { return }
+        
+        let appConfiguration: AppConfiguration = AppConfiguration.notFound
+        NetworkService.request(for: appConfiguration)
         
         let window = UIWindow(windowScene: scene)
         
@@ -24,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         
     }
+    
     
     private func createFeedViewController() -> UINavigationController {
         //todo-проверка?( let feedViewController = FeedViewController(viewModel: FeedModel())

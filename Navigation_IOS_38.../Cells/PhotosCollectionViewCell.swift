@@ -11,11 +11,11 @@ import StorageService
 final class PhotosCollectionViewCell: UICollectionViewCell {
     
     var photo: UIImage? {
-            didSet {
-               photoImageView.image = photo
-            }
+        didSet {
+            photoImageView.image = photo
         }
-
+    }
+    
     private var photoImageView:UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
@@ -32,7 +32,7 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupCellEndConstraints() {
         contentView.addSubview(photoImageView)
         photoImageView.translatesAutoresizingMaskIntoConstraints = false

@@ -135,20 +135,20 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         if (indexPath.section == 0) {
             
             let photoCollectionViewController = PhotosViewController()
-                        
+            
             Post.posts.forEach {
                 collection.append(UIImage(imageLiteralResourceName: $0.image))
-                }
-                        
-                photoCollectionViewController.imagePublisherFacade = facade
-                        
-                photoCollectionViewController.imagePublisherFacade?.addImagesWithTimer(time: 0.5, repeat: 10, userImages: collection)
-                        
-                navigationController?.pushViewController(photoCollectionViewController, animated: true)
-                } else {
-                    return
-                }
-         }
+            }
+            
+            photoCollectionViewController.imagePublisherFacade = facade
+            
+            photoCollectionViewController.imagePublisherFacade?.addImagesWithTimer(time: 0.5, repeat: 10, userImages: collection)
+            
+            navigationController?.pushViewController(photoCollectionViewController, animated: true)
+        } else {
+            return
+        }
+    }
 }
 
 
