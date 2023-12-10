@@ -7,13 +7,6 @@
 
 import Foundation
 //Задание 2
-struct Planets: Decodable {
-    let planets: [Planet]
-    
-    private enum CodingKeys: String, CodingKey {
-        case planets = ""
-    }
-}
 
 struct Planet: Decodable {
     let name: String
@@ -25,45 +18,80 @@ struct Planet: Decodable {
     let terrain: String
     let surface_water: Int?
     let population: Int?
-    let created: String
-    let edited: String
-    let url: String
-    let residents: [ URL ]
+    let created: Date?
+    let edited: Date?
+    let url: URL
+    let residents: URL
+    let films: URL
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case name
+        case rotation_period
+        case orbital_period
+        case diameter
+        case climate
+        case gravity
+        case terrain
+        case surface_water
+        case population
+        case created
+        case edited
+        case url
+        case residents
+        case films
+    }
+    
+    
+    
+    
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.name = try! container.decode(String.self, forKey: .name)
+        self.rotation_period = try! container.decode(Int.self, forKey: .rotation_period)
+        self.orbital_period = try! container.decode(Int.self, forKey: .orbital_period)
+        self.diameter = try! container.decode(Int.self, forKey: .diameter)
+        self.climate = try! container.decode(String.self, forKey: .climate)
+        self.gravity = try! container.decode(String.self, forKey: .gravity)
+        self.terrain = try! container.decode(String.self, forKey: .terrain)
+        self.surface_water = try! container.decode(Int.self, forKey: .surface_water)
+        self.population = try! container.decode(Int.self, forKey: .population)
+        self.created = try! container.decode(Date.self, forKey: .created)
+        self.edited = try! container.decode(Date.self, forKey: .edited)
+        self.url = try! container.decode(URL.self, forKey: .url)
+        self.residents = try! container.decode(URL.self, forKey: .residents)
+        self.films = try! container.decode(URL.self, forKey: .films)
+        
+        
+        
+        
+        func decode<T : Decodable>(_ type: T.Type, from data: Data) throws -> T {
+            let topLevel: Any
+            do {
+                topLevel = try JSONSerialization.jsonObject(with: data)
+            } catch {
+                throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: error))
+            }
+            
+            let decoder = JSONDecoder()
+            guard let value = try decoder.unbox(topLevel, as: type) else {
+                throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: [], debugDescription: "The given data did not contain a top-level value."))
+            }
+            
+            return value
+        }
+    }
 }
-
-//    private enum CodingKeys: String, CodingKey {
-//        typealias RawValue = String
-//        case name = "Tatooine"
-//        case rotation_period = "23"
-//        case orbital_period = "304"
-//        case diameter = "10465"
-//        case climate = "arid"
-//        case gravity = "1 standard"
-//        case terrain = "desert"
-//        case surface_water = "1"
-//        case population = "200000"
-//        case created = "2014-12-09T13:50:49.641000Z"
-//        case edited = "2014-12-20T20:58:18.411000Z"
-//        case url = "https://swapi.dev/api/planets/1/"
-        
-        // case residents = ["https://swapi.dev/api/people/1/", "https://swapi.dev/api/people/2/", "https://swapi.dev/api/people/4/", //"https://swapi.dev/api/people/6/", "https://swapi.dev/api/people/7/",  "https://swapi.dev/api/people/8/", //"https://swapi.dev/api/people/9/",  "https://swapi.dev/api/people/11/",  "https://swapi.dev/api/people/43/",    //"https://swapi.dev/api/people/62/"]
-        //  case films = ["https://swapi.dev/api/films/1/",
-        //  "https://swapi.dev/api/films/3/",
-        //  "https://swapi.dev/api/films/4/",
-        //  "https://swapi.dev/api/films/5/",
-        //  "https://swapi.dev/api/films/6/"
-        // ]
-//    }
+    // MARK: - Concrete Value Representations
+private extension JSONDecoder {
     
-//    init(from decoder: Decoder) throws {
-        
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//       // return
-//
-//        func decode<T: Decodable>(_ type: T.Type, from: Data) {
-//
-//        }
-
-//    }
+    func unbox<T : Decodable>(_ value: Any, as type: T.Type) throws -> T? {
+        return try unbox_(value, as: type) as? T
+    }
     
-//}
+    func unbox_(_ value: Any, as type: Decodable.Type) throws -> Any? {
+        return try type.init(from: Planet.self as! Decoder)
+        }
+    }

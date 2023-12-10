@@ -24,15 +24,20 @@ class InfoViewController: UIViewController {
     }()
     
     private let label: UILabel = UILabel()
+    private let planetLabel: UILabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(button)
         view.addSubview(label)
+        view.addSubview(planetLabel)
         
         label.frame = .init(x: 16, y: 50, width: view.bounds.width - 32, height: 100)
         label.numberOfLines = 0
+        
+        planetLabel.frame = .init(x: 16, y: 50, width: view.bounds.width - 32, height: 100)
+        planetLabel.numberOfLines = 0
         
         NSLayoutConstraint.activate([
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
@@ -80,4 +85,5 @@ class InfoViewController: UIViewController {
             }
         }
     }
+    
 }
