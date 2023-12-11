@@ -6,14 +6,9 @@
 //
 
 import UIKit
-import StorageService
-import iOSIntPackage
 
 class PhotosViewController: UIViewController {
-    
-    var imagePublisherFacade: ImagePublisherFacade?
-    
-    private var imageCollection: [UIImage] = []
+    var images: [String] = []
     private let spasing = 8.0
     private let count = 3.0
     
@@ -30,6 +25,21 @@ class PhotosViewController: UIViewController {
         return collectionView
     }()
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        setupView()
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.title = "Photo Gallery"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
+    
     func setupView() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
@@ -42,106 +52,30 @@ class PhotosViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        setupView()
-        navigationController?.navigationBar.isHidden = false
-        navigationItem.title = "Photo Gallery"
-        
-        imagePublisherFacade?.subscribe(self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        collectionView.frame = CGRect(
-            x: view.safeAreaInsets.left,
-            y: view.safeAreaInsets.top,
-            width: view.frame.width,
-            height: view.frame.height - view.safeAreaInsets.top
-        )
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        imagePublisherFacade?.removeSubscription(for: self)
-        imagePublisherFacade?.rechargeImageLibrary()
-    }
-    
 }
 
-
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        self.imageCollection = images
-    }
-    
-}
-
-extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
+//MARK: - Extensions
+extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageCollection.count
+        return images.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        let photo = imageCollection[indexPath.row]
-        
-        cell.photo = photo
-        
+        let value = images[indexPath.item]
+      //  cell.setupView(image: value)
         return cell
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //protocol ObserverProtocol: AnyObject {
-    //    var observations: [NSKeyValueObservation] {get set}
-    //   func removeAllObservation()
-    //}
-    
-    //тот кто наблюдает за событием
-    //final class Observer: ObserverProtocol {
-    //   func removeAllObservation() {
-    //    observations.removeAll()
-    //  }
-    
-    //  var observations: [NSKeyValueObservation] = []
-    
-    //   static let shared = Observer()
-    //   private init() {}
-    
-    //}
-    
-    
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let fullSpasing = (count + 1) * spasing // 32
+        let widthCollectionView = collectionView.bounds.width
+        let width = (widthCollectionView - fullSpasing) / count
+        
+        return CGSize(width: width, height: width)
+    }
+
 }

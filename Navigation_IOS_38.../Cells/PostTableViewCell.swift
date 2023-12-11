@@ -111,12 +111,12 @@ final class PostTableViewCell: UITableViewCell {
             titleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: titleView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -16),
-            
+
             descriptionLabel.topAnchor.constraint(equalTo: descriptionView.topAnchor),
             descriptionLabel.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor),
             descriptionLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -16),
-            
+
             footerStackView.topAnchor.constraint(equalTo: footerView.topAnchor),
             footerStackView.bottomAnchor.constraint(equalTo: footerView.bottomAnchor),
             footerStackView.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 16),
@@ -141,6 +141,5 @@ final class PostTableViewCell: UITableViewCell {
         
     }
 }
-
 
 

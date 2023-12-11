@@ -140,9 +140,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 collection.append(UIImage(imageLiteralResourceName: $0.image))
             }
             
-            photoCollectionViewController.imagePublisherFacade = facade
+         //   photoCollectionViewController.imagePublisherFacade = facade
             
-            photoCollectionViewController.imagePublisherFacade?.addImagesWithTimer(time: 0.5, repeat: 10, userImages: collection)
+          //  photoCollectionViewController.imagePublisherFacade?.addImagesWithTimer(time: 0.5, repeat: 10, userImages: collection)
             
             navigationController?.pushViewController(photoCollectionViewController, animated: true)
         } else {

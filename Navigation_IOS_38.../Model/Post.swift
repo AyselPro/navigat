@@ -13,10 +13,7 @@ struct Post {
     var image: String
     var likes: Int
     var views: Int
-}
-
-
-extension Post {
+    
    
     static var posts: [Post] {
         return [
@@ -44,5 +41,4 @@ extension Post {
         ]
     }
 }
-
 
