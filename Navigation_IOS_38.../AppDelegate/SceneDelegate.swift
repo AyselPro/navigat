@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: scene)
         
-        window.rootViewController = createTabBarController()
+        window.rootViewController = LoginCoordinator().start()
         window.makeKeyAndVisible()
         self.window = window
         
@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func createFeedViewController() -> UINavigationController {
         //todo-проверка?( let feedViewController = FeedViewController(viewModel: FeedModel())
-        let feedViewController = FeedViewController(viewModel: FeedModel())
+        let feedViewController = PostViewController(post: Post(author: "", description: "", image: "", likes: 0, views: 0))
         feedViewController.title = "Лента"
         feedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "doc.richtext"), tag: 0)
         return UINavigationController(rootViewController: feedViewController)

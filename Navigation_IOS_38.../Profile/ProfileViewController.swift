@@ -10,7 +10,7 @@ import StorageService
 import iOSIntPackage
 
 class ProfileViewController: UIViewController {
-    
+
     private let profileHeaderView: ProfileHeaderView = ProfileHeaderView()
     private var posts = Post.posts
     
@@ -58,7 +58,8 @@ class ProfileViewController: UIViewController {
     // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //
+        view.backgroundColor = .red
         self.avatarImageView.image = user.avatar
         view.backgroundColor = .lightGray
         setupTableView()
