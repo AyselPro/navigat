@@ -17,12 +17,9 @@ class FeedCoordinator: FeedBaseCoordinator {
         viewModel.onNext = { [weak self] in
             self?.showDetailScreen()
         }
-        let module = FeedVC(
-            viewModel: viewModel
-        )
-        rootViewController = UINavigationController(
-            rootViewController: module
-        )
+        let view = FeedViewController(viewModel: viewModel)
+        viewModel.view = view
+        rootViewController = UINavigationController(rootViewController: view)
         return rootViewController
     }
     

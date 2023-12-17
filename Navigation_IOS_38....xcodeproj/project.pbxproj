@@ -24,14 +24,12 @@
 		F9A215B32B27062600B90D9D /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215B22B27062600B90D9D /* LoginCoordinator.swift */; };
 		F9A215B52B270B2D00B90D9D /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215B42B270B2D00B90D9D /* FeedCoordinator.swift */; };
 		F9A215BB2B27193B00B90D9D /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215BA2B27193B00B90D9D /* ProfileVM.swift */; };
-		F9A215C52B27392A00B90D9D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215C42B27392A00B90D9D /* ProfileVC.swift */; };
 		F9A215C92B273EFF00B90D9D /* ProfileBaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215C82B273EFF00B90D9D /* ProfileBaseCoordinator.swift */; };
 		F9A215CB2B27436600B90D9D /* ProfileDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215CA2B27436600B90D9D /* ProfileDetailVM.swift */; };
 		F9A215D22B27545B00B90D9D /* ProfileDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215D12B27545B00B90D9D /* ProfileDetailVC.swift */; };
 		F9A215D52B2853D600B90D9D /* FeedDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215D42B2853D600B90D9D /* FeedDetailVC.swift */; };
 		F9A215D72B28543A00B90D9D /* FeedDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215D62B28543A00B90D9D /* FeedDetailVM.swift */; };
 		F9A215DA2B28547A00B90D9D /* FeedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215D92B28547A00B90D9D /* FeedVM.swift */; };
-		F9A215DC2B28548B00B90D9D /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215DB2B28548B00B90D9D /* FeedVC.swift */; };
 		F9BBDAA42B209B6E0053A2A0 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BBDAA32B209B6E0053A2A0 /* NetworkService.swift */; };
 		F9F65CBA2B12A43600F98457 /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CB92B12A43600F98457 /* CurrentUserService.swift */; };
 		F9F65CBC2B12A46F00F98457 /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F65CBB2B12A46F00F98457 /* TestUserService.swift */; };
@@ -103,14 +101,12 @@
 		F9A215B22B27062600B90D9D /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		F9A215B42B270B2D00B90D9D /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
 		F9A215BA2B27193B00B90D9D /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
-		F9A215C42B27392A00B90D9D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		F9A215C82B273EFF00B90D9D /* ProfileBaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBaseCoordinator.swift; sourceTree = "<group>"; };
 		F9A215CA2B27436600B90D9D /* ProfileDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailVM.swift; sourceTree = "<group>"; };
 		F9A215D12B27545B00B90D9D /* ProfileDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailVC.swift; sourceTree = "<group>"; };
 		F9A215D42B2853D600B90D9D /* FeedDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailVC.swift; sourceTree = "<group>"; };
 		F9A215D62B28543A00B90D9D /* FeedDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailVM.swift; sourceTree = "<group>"; };
 		F9A215D92B28547A00B90D9D /* FeedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVM.swift; sourceTree = "<group>"; };
-		F9A215DB2B28548B00B90D9D /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		F9BBDAA32B209B6E0053A2A0 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		F9F65CB92B12A43600F98457 /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		F9F65CBB2B12A46F00F98457 /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
@@ -254,7 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				F9A215BA2B27193B00B90D9D /* ProfileVM.swift */,
-				F9A215C42B27392A00B90D9D /* ProfileVC.swift */,
 				F9A215C12B272E9700B90D9D /* ProfileDetailModule */,
 			);
 			path = ProfileModule;
@@ -291,7 +286,6 @@
 		F9A215D82B28545E00B90D9D /* FeedModule */ = {
 			isa = PBXGroup;
 			children = (
-				F9A215DB2B28548B00B90D9D /* FeedVC.swift */,
 				F9A215D92B28547A00B90D9D /* FeedVM.swift */,
 			);
 			path = FeedModule;
@@ -533,8 +527,6 @@
 				F9F65CBC2B12A46F00F98457 /* TestUserService.swift in Sources */,
 				F9F65CDF2B12AE5200F98457 /* PostTableViewCell.swift in Sources */,
 				F9A215CB2B27436600B90D9D /* ProfileDetailVM.swift in Sources */,
-				F9A215DC2B28548B00B90D9D /* FeedVC.swift in Sources */,
-				F9A215C52B27392A00B90D9D /* ProfileVC.swift in Sources */,
 				F9A215BB2B27193B00B90D9D /* ProfileVM.swift in Sources */,
 				F9F65CF32B12B05300F98457 /* ProfileViewController.swift in Sources */,
 				F9A215DA2B28547A00B90D9D /* FeedVM.swift in Sources */,

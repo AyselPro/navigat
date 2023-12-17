@@ -14,6 +14,9 @@ protocol LogInViewControllerDelegate: AnyObject {
 final class LogInViewController: UIViewController {
     weak var delegate: LogInViewControllerDelegate?
     
+    private var user: User
+    let viewModel: ProfileVM
+    
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.layer.borderColor = UIColor.lightGray.cgColor
@@ -102,6 +105,20 @@ final class LogInViewController: UIViewController {
         
         return button
     }()
+    
+    // MARK: - Init
+    init(user: User, viewModel: ProfileVM) {
+        self.user = user
+        self.viewModel = viewModel
+       // self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+        title = "Profile"
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //
     @objc private func buttonAction() {
         guard let login = emailTextField.text, !login.isEmpty else { return }
@@ -115,7 +132,7 @@ final class LogInViewController: UIViewController {
                 errorAuth()
                 return
             }
-            let profileViewController = ProfileViewController(user: user)
+            let profileViewController = ProfileViewController(user: user, viewModel: viewModel)
             self.navigationController?.pushViewController(profileViewController, animated: true)
             
         } else {

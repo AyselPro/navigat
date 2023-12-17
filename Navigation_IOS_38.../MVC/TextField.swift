@@ -34,18 +34,10 @@ final class TextField: UITextField {
         newText?(text)
     }
     
-    private lazy var checkGuessButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blue
+    private lazy var checkGuessButton: CustomButton = {
+        let button = CustomButton(titleText: "Пароль", titleColor: .lightGray, backgroundColor: .blue, tapAction: guessButton)
         button.layer.cornerRadius = 12
-        button.setTitle("Пароль", for: .normal)
-        button.setTitleColor(.lightGray, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.addTarget(self, action: #selector(guessButton), for: .touchUpInside)
-        
         return button
-        
     }()
     
     @objc func guessButton() {
