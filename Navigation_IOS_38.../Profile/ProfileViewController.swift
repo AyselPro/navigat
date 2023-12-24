@@ -9,7 +9,7 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     let viewModel: ProfileVM
     
@@ -81,6 +81,9 @@ class ProfileViewController: UIViewController {
         setupTableView()
         view.backgroundColor = .red
         setupUI()
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
+        
            //todo
         //self.title = "Photo Gallery"
         // code
@@ -154,14 +157,36 @@ class ProfileViewController: UIViewController {
             return true
         }
     }
+
+    @objc func addNewPerson() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func imagePickerController(_picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        
+        let imageName = UUID().uuidString
+        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
+
+        if let jpegData = image.jpegData(compressionQuality: 0.8) {
+           try? jpegData.write(to: imagePath)
+           }
+
+            dismiss(animated: true)
+        }
+
+        func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            return paths[0]
+        }
     
     @objc private func goToProfile2() {
         viewModel.onDetail?()
     }
 }
-
-
-
 
 
 
