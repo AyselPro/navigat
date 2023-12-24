@@ -83,6 +83,7 @@ final class LogInViewController: UIViewController {
         return button
     }()
     
+    
     // MARK: - Login View Content
     // Logo Image
     private let logoImageView: UIImageView = {
@@ -140,7 +141,7 @@ final class LogInViewController: UIViewController {
             errorAuth()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()

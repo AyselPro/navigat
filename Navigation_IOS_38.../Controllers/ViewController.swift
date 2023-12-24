@@ -11,6 +11,8 @@ import  iOSIntPackage
 
 class ViewController: UIViewController {
     
+    private let checkerService = CheckerService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()

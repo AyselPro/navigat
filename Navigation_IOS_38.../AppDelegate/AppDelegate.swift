@@ -5,6 +5,7 @@
 //  Created by Aysel on 05.10.2023.
 //
 
+import FirebaseCore
 import UIKit
 
 @main
@@ -14,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+       // print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         return true
     }
     

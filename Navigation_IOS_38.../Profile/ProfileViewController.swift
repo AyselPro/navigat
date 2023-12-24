@@ -15,6 +15,25 @@ class ProfileViewController: UIViewController {
     
    // var coordinator: ProfileBaseCoordinator?
     
+    var collection: [UIImage] = []
+    
+    public typealias RepeatCount = Int
+    
+    private let publisher = ImagePublisher()
+    
+    init(user: User, viewModel: ProfileVM) {
+        self.user = user
+        self.viewModel = viewModel
+       // self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+        title = "Profile"
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+
     private lazy var goToProfile2button: CustomButton = {
         let btn = CustomButton.init(titleText: "Go to Detail Profile", titleColor: .white, backgroundColor: .black, tapAction: goToProfile2)
         btn.layer.borderColor = UIColor.black.cgColor
@@ -37,8 +56,6 @@ class ProfileViewController: UIViewController {
     
     private let facade = ImagePublisherFacade()
     
-    var collection: [UIImage] = []
-    
     private lazy var avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.contentMode = .scaleAspectFill
@@ -53,22 +70,7 @@ class ProfileViewController: UIViewController {
         
         return avatarImageView
     }()
-    
-    
-    
-    // MARK: - Init
-    init(user: User, viewModel: ProfileVM) {
-        self.user = user
-        self.viewModel = viewModel
-       // self.coordinator = coordinator
-        super.init(nibName: nil, bundle: nil)
-        title = "Profile"
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +81,15 @@ class ProfileViewController: UIViewController {
         setupTableView()
         view.backgroundColor = .red
         setupUI()
-        
+           //todo
+        //self.title = "Photo Gallery"
+        // code
+
+        //publisher.subscribe(self)
+      //  let photos = Photos.shared.examples
+      //  publisher.addImagesWithTimer(time: 0.5, repeat: photos.count, userImages: photos)
+      //  }
+
         //TODO: установить таблицу по констрейнтам
         setupConstraints()
         
@@ -131,11 +141,24 @@ class ProfileViewController: UIViewController {
         ])
     }
     
+    // добавляет подписчика
+    
+    public func subscribe(_ subscriber: ImageLibrarySubscriber) {
+        publisher.add(subscriber: subscriber)
+   }
+    
+    // удаляет подписчика
+    
+    public func removeSubscription(for subscriber: ImageLibrarySubscriber) {
+        publisher.remove { _ in
+            return true
+        }
+    }
+    
     @objc private func goToProfile2() {
         viewModel.onDetail?()
     }
 }
-
 
 
 
@@ -170,17 +193,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             
             let photoCollectionViewController = PhotosViewController()
             
-            Post.posts.forEach {
-                collection.append(UIImage(imageLiteralResourceName: $0.image))
-            }
+            photoCollectionViewController.imagePublisherFacade = facade
             
-         //   photoCollectionViewController.imagePublisherFacade = facade
-            
-          //  photoCollectionViewController.imagePublisherFacade?.addImagesWithTimer(time: 0.5, repeat: 10, userImages: collection)
-            
-            navigationController?.pushViewController(photoCollectionViewController, animated: true)
-        } else {
-            return
         }
     }
 }

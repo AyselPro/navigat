@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct TestUser: Decodable  {
     let userId: Int
     let id: Int

@@ -4,7 +4,7 @@
 //
 //  Created by Aysel on 26.11.2023.
 //
-
+import FirebaseAuth
 import UIKit
 
 protocol UserService {

@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController {
-    var images: [String] = []
+    private var imageCollection: [UIImage] = []
     private let spasing = 8.0
     private let count = 3.0
+    
+    var imagePublisherFacade: ImagePublisherFacade?
     
     private lazy var collectionView: UICollectionView = {
         
@@ -33,11 +36,21 @@ class PhotosViewController: UIViewController {
         setupView()
         navigationController?.navigationBar.isHidden = false
         navigationItem.title = "Photo Gallery"
+        
+        imagePublisherFacade?.subscribe(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
+            
+            imagePublisherFacade?.removeSubscription(for: self)
+        
+            imagePublisherFacade?.rechargeImageLibrary()
     }
     
     func setupView() {
@@ -57,7 +70,7 @@ class PhotosViewController: UIViewController {
 //MARK: - Extensions
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return imageCollection.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -65,8 +78,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
             return UICollectionViewCell()
         }
         
-        let value = images[indexPath.item]
-      //  cell.setupView(image: value)
+        let value = imageCollection[indexPath.item]
         return cell
     }
 
@@ -78,4 +90,13 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         return CGSize(width: width, height: width)
     }
 
+}
+
+//
+extension PhotosViewController: ImageLibrarySubscriber {
+    
+    func receive(images: [UIImage]) {
+        self.imageCollection = images
+    }
+    
 }
