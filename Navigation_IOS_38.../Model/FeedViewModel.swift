@@ -37,7 +37,6 @@ class FeedViewModel: FeedViewOutput {
     init() {}
 }
 
-
 func makeFeed() -> (viewModel: FeedModel, controller: FeedViewController) {
     let viewModel = FeedModel()
     let controller = FeedViewController(viewModel: viewModel as! FeedVM)

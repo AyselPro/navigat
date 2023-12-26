@@ -8,72 +8,30 @@
 import FirebaseAuth
 import UIKit
 
-class CheckerService: UserService {
-    func currentUser(login: String) -> User? {
-        return user
-    }
-    
-    var user = User(login: "Aysel1994", firstName: "Aysel", avatar: UIImage(), status: "живая")
-    }
+protocol CheckerServiceProtocol {
+    func signUp(email: String, password: String, completion: @escaping ((Bool) -> ()))
+    func checkCredentials(email: String, password: String, completion: @escaping ((Bool) -> ()))
+}
 
-    func loginUser(email: String, password: String, completion: @escaping(Result< UserService, Error>) -> Void) {
-        //вход
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                completion(.failure(error))
-                print(error.localizedDescription)
+final class CheckerService: CheckerServiceProtocol {
+    func signUp(email: String, password: String, completion: @escaping ((Bool) -> ())) {
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            guard error == nil else {
+                return completion(false)
             }
             
-           // if let authResult = authResult {
-               // completion(.success(TestUserService(authResult.user) as UserService))
-            }
+            return completion(true)
         }
-        
-   // }
+    }
     
-    //регистрация
-func singUpUser(email: String, password: String, completion: @escaping(Result< UserService ,Error>) -> Void) {
-   // Auth.auth().createUser(withEmail: emailTextField, password: passwordField.text!) { user, error in
-       // if error == nil {
+    func checkCredentials(email: String, password: String, completion: @escaping ((Bool) -> ())) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            guard error == nil else {
+                return completion(false)
+            }
             
+            return completion(true)
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      //  override func viewDidLoad() {
-        //    super.viewDidLoad()
-          //
-          //  Auth.auth()!.addStateDidChangeListener() { auth, user in
-              //  if user != nil {
-              //      self.switchStoryboard()
-            //    }
-           // }
-      //  }
-        
-        // или вы можете проверить напрямую
-        
-      //  if Auth.auth().currentUser?.uid != nil {
-            
-            //user is logged in
-            
-     //   }else{
-            //user is not logged in
-     //   }
- //   }
-//}
+    }
+}
+

@@ -1,5 +1,5 @@
 //
-//  LogInViewController.swift
+//  FireBaseLoginViewController.swift
 //  Navigation_IOS_38_Ganbarova
 //
 //  Created by Aysel on 17.10.2023.
@@ -7,15 +7,7 @@
 
 import UIKit
 
-protocol LogInViewControllerDelegate: AnyObject {
-    func check(login: String, password: String) -> Bool
-}
-
-final class LogInViewController: UIViewController {
-    weak var delegate: LogInViewControllerDelegate?
-    
-    private var user: User
-    let viewModel: ProfileVM
+final class FireBaseLoginViewController: UIViewController {
     
     private let emailTextField: UITextField = {
         let textField = UITextField()
@@ -67,7 +59,7 @@ final class LogInViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var button: UIButton = {
+    private lazy var logInButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 10
         button.setTitle("Log In", for: .normal)
@@ -76,16 +68,29 @@ final class LogInViewController: UIViewController {
         button.setTitleColor(.white.withAlphaComponent(0.8), for: .selected)
         button.setTitleColor(.white.withAlphaComponent(0.8), for: .highlighted)
         button.setTitleColor(.white.withAlphaComponent(0.8), for: .disabled)
-        //
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+
+        button.addTarget(self, action: #selector(logInButtonDidTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
+    private lazy var singUpButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 10
+        button.setTitle("Sing Up", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        
+        button.setTitleColor(.white.withAlphaComponent(0.8), for: .selected)
+        button.setTitleColor(.white.withAlphaComponent(0.8), for: .highlighted)
+        button.setTitleColor(.white.withAlphaComponent(0.8), for: .disabled)
+
+        button.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
     
-    // MARK: - Login View Content
-    // Logo Image
     private let logoImageView: UIImageView = {
         let logo = UIImageView()
         logo.image = #imageLiteral(resourceName: "Logo")
@@ -94,60 +99,70 @@ final class LogInViewController: UIViewController {
         return logo
     }()
     
-    // Brute Force Button
-    private var passwordHackingButton: UIButton  = {
-        
-        let button = UIButton()
-        button.setTitle("Guess the password", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .purple
-        button.setTitleColor(.darkGray, for: .selected)
-        button.setTitleColor(.darkGray, for: .highlighted)
-        
-        return button
-    }()
+    private let service: CheckerServiceProtocol
     
-    // MARK: - Init
-    init(user: User, viewModel: ProfileVM) {
-        self.user = user
-        self.viewModel = viewModel
-       // self.coordinator = coordinator
+    init(service: CheckerServiceProtocol) {
+        self.service = service
         super.init(nibName: nil, bundle: nil)
-        title = "Profile"
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //
-    @objc private func buttonAction() {
-        guard let login = emailTextField.text, !login.isEmpty else { return }
-        guard let password = passwordTextField.text, !password.isEmpty else { return }
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.loadView()
         
-        let result = delegate?.check(login: login, password: password) ?? false
+        view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = true
+        logInButton.backgroundColor = UIColor(named: "Blue")
+        singUpButton.backgroundColor = UIColor(named: "Blue")?.withAlphaComponent(0.5)
         
-        if result {
-            //авторизация прошла удачно
-            guard let user = CurrentUserService.shared.currentUser(login: login) else {
-                errorAuth()
-                return
+        setupConstraints()
+        title = "Profile"
+    }
+    
+    @objc private func logInButtonDidTap() {
+        guard
+            let login = emailTextField.text,
+            let password = passwordTextField.text,
+            !login.isEmpty,
+            !password.isEmpty
+        else {
+            return showAlert(title: "Ошибка!", message: "Не введены поля")
+        }
+        
+        service.checkCredentials(email: login, password: password) { [weak self] isSuccess in
+            if isSuccess {
+                self?.showAlert(title: "Успешно!", message: "Пользователь залогинен")
+                self?.emailTextField.text = nil
+                self?.passwordTextField.text = nil
+            } else {
+                self?.showAlert(title: "Ошибка!", message: "Такого пользователя не существует")
             }
-            let profileViewController = ProfileViewController(user: user, viewModel: viewModel)
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-            
-        } else {
-            //авторизация не прошла удачно
-            errorAuth()
         }
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupConstraints()
-        addSubViews()
-        logInButtonSuccessed()
-        print(type(of: delegate))
+    
+    @objc private func signUpButtonDidTap() {
+        guard
+            let login = emailTextField.text,
+            let password = passwordTextField.text,
+            !login.isEmpty,
+            !password.isEmpty
+        else {
+            return showAlert(title: "Ошибка!", message: "Не введены поля")
+        }
+        
+        service.signUp(email: login, password: password) { [weak self] isSuccess in
+            if isSuccess {
+                self?.showAlert(title: "Успешно!", message: "Пользователь зарегистрирован")
+                self?.emailTextField.text = nil
+                self?.passwordTextField.text = nil
+            } else {
+                self?.showAlert(title: "Ошибка!", message: "Ошибка на стороне FireBase")
+            }
+        }
     }
     
     private func setupConstraints() {
@@ -161,7 +176,7 @@ final class LogInViewController: UIViewController {
         view.addSubviews(content)
         content.addSubviews(scrollView)
         scrollView.addSubviews(contentView)
-        contentView.addSubviews(imageView, stackView, button)
+        contentView.addSubviews(imageView, stackView, logInButton, singUpButton)
         
         NSLayoutConstraint.activate([
             content.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
@@ -192,27 +207,25 @@ final class LogInViewController: UIViewController {
             
             passwordTextField.heightAnchor.constraint(equalToConstant: 120),
             
-            button.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            button.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -50),
-            button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            button.heightAnchor.constraint(equalToConstant: 50)
+            logInButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            singUpButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
+            singUpButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -50),
+            singUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            singUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            singUpButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     
-    private func addSubViews() {
-        navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .white
-        button.backgroundColor = UIColor(named: "Blue")
-        //        button.backgroundColor = "#4885CC".hexColor()
-    }
-    
-    private func errorAuth() {
-        let alert = UIAlertController(title: "Ошибка авторизации", message: "введён корректный логин", preferredStyle: .alert)
-        
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "Закрыть", style: .cancel)
         
         alert.addAction(ok)
+        
         present(alert, animated: true)
     }
     
@@ -226,67 +239,4 @@ final class LogInViewController: UIViewController {
             
         }
     }
-    
-    // MARK: Log In Logic
-    private func logInButtonSuccessed() {
-        
-        let typedLogin = emailTextField.text
-        let typedPassword = passwordTextField.text ?? ""
-#if DEBUG
-        var userService = TestUserService()
-#else
-        let userService = CurrentUserService()
-        
-        if let existingUserLogin = typedLogin {
-            let profileViewController = ProfileViewController(userService: userService, typedLogin: existingUserLogin)
-            do {
-                let currentUser = try userService.currentUser(login: existingUserLogin)
-                
-                if currentUser.avatar != UIImage() {
-                    
-                    let currentMoment = Date()
-                    guard let checkedLogin = typedLogin else {
-                        preconditionFailure()
-                    }
-                    
-                    let typedInfo = checkedLogin + "\(currentMoment.hashValue)" + typedPassword
-                    
-                    if checkMyPass(typedInfo, time: currentMoment) {
-                        navigationController?.pushViewController(profileViewController, animated: true)
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        let alertController = UIAlertController(title: "Неверный пароль", message: "Попробуйте ещё раз", preferredStyle: .alert)
-                        let okAction = UIAlertAction(title: "ОК", style: .default) { _ in
-                            print("Wrong password")
-                        }
-                        
-                        alertController.addAction(okAction)
-                        
-                        self.present(alertController, animated: true, completion: nil)
-                    }
-                }
-            } catch let error {
-                let error = "User not found on the server"
-                self.errorCatched(error: error, errorMessage: "Something went wrong on the server side. Please, try to log in again")
-            } catch {
-                let error = "Unknown error"
-                self.errorCatched(error: error, errorMessage: "Something went wrong. Please, reload the app")
-            }
-            
-        }
-#endif
-    }
 }
-
-protocol LogInFactory {
-    func makeLoginInspector() -> LoginInspector
-}
-
-struct MyLogInFactory: LogInFactory {
-    func makeLoginInspector() -> LoginInspector {
-        return LoginInspector.shared
-    }
-}
-

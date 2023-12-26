@@ -23,7 +23,7 @@ final public class ImagePublisherFacade {
     
     public func subscribe(_ subscriber: ImageLibrarySubscriber) {
         publisher.add(subscriber: subscriber)
-   }
+    }
     
     // удаляет подписчика
     
@@ -53,9 +53,9 @@ final public class ImagePublisherFacade {
                 guard let randomImage = images.randomElement() else { return }
                 self?.publisher.add(image: randomImage)
             } else {
-                guard let imageCase = Images.allCases.randomElement() else { return }
-                let libraryImage = imageCase.image(name: imageCase)
-                self?.publisher.add(image: libraryImage)
+                //  guard let imageCase = Images.allCases.randomElement() else { return }
+                //let libraryImage = imageCase.image(name: imageCase)
+                // self?.publisher.add(image: libraryImage)
             }
             
             if count == times {
@@ -71,4 +71,4 @@ final public class ImagePublisherFacade {
     }
 }
 
- 
+

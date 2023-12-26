@@ -19,17 +19,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         NetworkService.request(for: appConfiguration)
         
         let window = UIWindow(windowScene: scene)
-        let fileManagerService = FileManagerService()
-        let controller = ListViewController(fileManagerService: fileManagerService)
-        controller.title = "Documents"
-        let named = UIImage(named: "Image 1")
-        controller.tabBarItem = UITabBarItem(title: "Documents", image: UIImage(systemName: "Image 1"), tag: 0)
-        let navigationController = UINavigationController(rootViewController: controller)
         
-        window.rootViewController = navigationController
+        window.rootViewController = createFileManagerViewController()
         window.makeKeyAndVisible()
         self.window = window
         
+    }
+    
+    private func createFileManagerViewController() -> UIViewController {
+        let fileManagerService = FileManagerService()
+        let controller = ListViewController(fileManagerService: fileManagerService)
+        controller.tabBarItem = UITabBarItem(title: "Documents", image: UIImage(systemName: "Image 1"), tag: 0)
+        let navigationController = UINavigationController(rootViewController: controller)
+    
+        return navigationController
     }
     
     private func createFeedViewController() -> UINavigationController {
@@ -41,7 +44,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func createProfileViewController() -> UINavigationController {
-        let profileViewController = LogInViewController.init(user: .init(login: "", firstName: "", avatar: .init(), status: ""), viewModel: ProfileVMImp.init())
+        let profileViewController = LogInViewController(
+            user: .init(login: "", firstName: "", avatar: .init(), status: ""),
+            viewModel: ProfileVMImp.init())
         let factory = MyLogInFactory()
         let inspector = factory.makeLoginInspector()
         profileViewController.delegate = inspector
@@ -49,6 +54,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         profileViewController.title = "Профиль"
         profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 1)
         return UINavigationController(rootViewController: profileViewController)
+    }
+    
+    private func createFireBaseLoginViewController() -> UINavigationController {
+        let checkerService = CheckerService()
+        let loginViewController = FireBaseLoginViewController(service: checkerService)
+        
+        loginViewController.title = "Профиль"
+        loginViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 1)
+        
+        return UINavigationController(rootViewController: loginViewController)
     }
     
     private func createTabBarController() -> UITabBarController {
@@ -59,42 +74,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.viewControllers = [createFeedViewController(), createProfileViewController()]
         
         return tabBarController
-        
     }
     
-    //
     func sceneDidDisconnect(_ scene: UIScene) {
-        
-        func logoutUser(completion: @escaping(Result<Void, Error>) -> Void) {
-            do {
-                try Auth.auth().signOut()
-                completion(.success(()))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        
-        func sceneDidBecomeActive(_ scene: UIScene) {
-            // Called when the scene has moved from an inactive state to an active state.
-            // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        }
-        
-        func sceneWillResignActive(_ scene: UIScene) {
-            // Called when the scene will move from an active state to an inactive state.
-            // This may occur due to temporary interruptions (ex. an incoming phone call).
-        }
-        
-        func sceneWillEnterForeground(_ scene: UIScene) {
-            // Called as the scene transitions from the background to the foreground.
-            // Use this method to undo the changes made on entering the background.
-        }
-        
-        func sceneDidEnterBackground(_ scene: UIScene) {
-            // Called as the scene transitions from the foreground to the background.
-            // Use this method to save data, release shared resources, and store enough scene-specific state information
-            // to restore the scene back to its current state.
-        }
-        
-        
+        try? Auth.auth().signOut()
+    }
+    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        // Called when the scene has moved from an inactive state to an active state.
+        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+    }
+    
+    func sceneWillResignActive(_ scene: UIScene) {
+        // Called when the scene will move from an active state to an inactive state.
+        // This may occur due to temporary interruptions (ex. an incoming phone call).
+    }
+    
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        // Called as the scene transitions from the background to the foreground.
+        // Use this method to undo the changes made on entering the background.
+    }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        // Called as the scene transitions from the foreground to the background.
+        // Use this method to save data, release shared resources, and store enough scene-specific state information
+        // to restore the scene back to its current state.
     }
 }

@@ -19,6 +19,11 @@ final class FileManagerService: FileManagerServiceDelegate {
         (try? FileManager.default.contentsOfDirectory(atPath: pathForFolder)) ?? []
     }
     
+    var rootFolderName: String {
+        guard let url = URL(string: pathForFolder) else { return "Documents" }
+        return url.lastPathComponent
+    }
+    
     init(pathForFolder: String) {
         self.pathForFolder = pathForFolder
     }
@@ -26,32 +31,32 @@ final class FileManagerService: FileManagerServiceDelegate {
     init() {
         pathForFolder = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     }
-
-    //метод добавления файла (картинки) createFile
-    func createFile(name: String, content: String) {
+    
+    // метод добавления файла (картинки) createFile
+    func createFile(name: String, content: Data) {
         let path = URL(filePath: pathForFolder + "/" + name)
         do {
-            try content.data(using: .utf8)?.write(to: path)
+            try content.write(to: path)
         } catch {
             print(error.localizedDescription)
         }
     }
-        
-        //метод добавления директории createDirectory
+    
+    //метод добавления директории createDirectory
     func addDirectory(name: String) {
         try? FileManager.default.createDirectory(atPath:  pathForFolder + "/" + name, withIntermediateDirectories: true)
     }
-        
-        //метод удаления контента removeContent
-        func removeContent(name: String) {
-            try? FileManager.default.removeItem(atPath: pathForFolder + "/" + name)
-        }
-        
+    
+    //метод удаления контента removeContent
+    func removeContent(name: String) {
+        try? FileManager.default.removeItem(atPath: pathForFolder + "/" + name)
+    }
+    
     func getPath(at index: Int) -> String {
         pathForFolder + "/" + items[index]
     }
     
-        //Проверка существования директории
+    //Проверка существования директории
     func isDirectoryAtIndex(_ index: Int) -> Bool {
         let item = items[index]
         let path = pathForFolder + "/" + item
@@ -62,7 +67,7 @@ final class FileManagerService: FileManagerServiceDelegate {
         
         return objcBool.boolValue
     }
-        
+    
     func deleteItem(at index: Int) {
         let path = pathForFolder + "/" + items[index]
         try? FileManager.default.removeItem(atPath: path)

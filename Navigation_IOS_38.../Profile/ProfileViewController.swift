@@ -9,11 +9,11 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
-class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class ProfileViewController: UIViewController {
+    
     let viewModel: ProfileVM
     
-   // var coordinator: ProfileBaseCoordinator?
+    // var coordinator: ProfileBaseCoordinator?
     
     var collection: [UIImage] = []
     
@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     init(user: User, viewModel: ProfileVM) {
         self.user = user
         self.viewModel = viewModel
-       // self.coordinator = coordinator
+        // self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
         title = "Profile"
     }
@@ -33,14 +33,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
     private lazy var goToProfile2button: CustomButton = {
         let btn = CustomButton.init(titleText: "Go to Detail Profile", titleColor: .white, backgroundColor: .black, tapAction: goToProfile2)
         btn.layer.borderColor = UIColor.black.cgColor
         btn.layer.borderWidth = 2
         return btn
     }()
-
+    
     private let profileHeaderView: ProfileHeaderView = ProfileHeaderView()
     private var posts = Post.posts
     
@@ -70,7 +70,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         return avatarImageView
     }()
-
+    
     // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,18 +81,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         setupTableView()
         view.backgroundColor = .red
         setupUI()
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
-        
-           //todo
+        //todo
         //self.title = "Photo Gallery"
         // code
-
+        
         //publisher.subscribe(self)
-      //  let photos = Photos.shared.examples
-      //  publisher.addImagesWithTimer(time: 0.5, repeat: photos.count, userImages: photos)
-      //  }
-
+        //  let photos = Photos.shared.examples
+        //  publisher.addImagesWithTimer(time: 0.5, repeat: photos.count, userImages: photos)
+        //  }
+        
         //TODO: установить таблицу по констрейнтам
         setupConstraints()
         
@@ -148,7 +145,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     public func subscribe(_ subscriber: ImageLibrarySubscriber) {
         publisher.add(subscriber: subscriber)
-   }
+    }
     
     // удаляет подписчика
     
@@ -157,31 +154,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             return true
         }
     }
-
-    @objc func addNewPerson() {
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
-    }
-    
-    func imagePickerController(_picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.editedImage] as? UIImage else { return }
-        
-        let imageName = UUID().uuidString
-        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
-
-        if let jpegData = image.jpegData(compressionQuality: 0.8) {
-           try? jpegData.write(to: imagePath)
-           }
-
-            dismiss(animated: true)
-        }
-
-        func getDocumentsDirectory() -> URL {
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            return paths[0]
-        }
     
     @objc private func goToProfile2() {
         viewModel.onDetail?()

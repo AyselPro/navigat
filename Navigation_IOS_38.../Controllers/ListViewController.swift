@@ -19,64 +19,6 @@ final class ListViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var addDirectoryButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Cancel", for: .normal)
-        button.backgroundColor = .lightGray
-        button.setTitleColor(.blue, for: .normal)
-        button.layer.cornerRadius = 20
-        button.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var addFileButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Create", for: .normal)
-        button.backgroundColor = .lightGray
-        button.setTitleColor(UIColor.blue, for: .normal)
-        button.layer.cornerRadius = 20
-        button.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
-        return button
-    }()
-    
-    private var nameLabel: UILabel = {
-        let nameLabel = UILabel()
-        nameLabel.text = "Documents"
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 30)
-        nameLabel.numberOfLines = 0
-        nameLabel.textColor = .black
-        nameLabel.backgroundColor = .lightGray
-        nameLabel.layer.masksToBounds = true
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        return nameLabel
-    }()
-  
-    private lazy var  createLabel: UILabel = {
-        let createLabel = UILabel()
-        createLabel.text = "Create new folder"
-        createLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        createLabel.textColor = .black
-        createLabel.backgroundColor = .white
-        createLabel.textAlignment = .center
-        createLabel.layer.masksToBounds = true
-        createLabel.translatesAutoresizingMaskIntoConstraints = false
-        return createLabel
-    }()
-    
-    private lazy var textField: UITextField = {
-        let textField = UITextField()
-        textField.font = UIFont.boldSystemFont(ofSize: 30)
-        textField.borderStyle = .roundedRect
-        textField.placeholder = "Folder name"
-        textField.textColor = .lightGray
-        textField.layer.cornerRadius = 20
-        textField.layer.borderColor = UIColor.white.cgColor
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
     init(fileManagerService: FileManagerService) {
         self.fileManagerService = fileManagerService
         super.init(nibName: nil, bundle: nil)
@@ -88,61 +30,64 @@ final class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
         layout()
+        
+        title = fileManagerService.rootFolderName
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let addFolder = UIBarButtonItem(
+            image: UIImage(systemName: "folder.badge.plus"),
+            style: .plain,
+            target: self,
+            action: #selector(addFolderButtonDidTap)
+        )
+        let addFile = UIBarButtonItem(
+            image: UIImage(systemName: "plus"),
+            style: .plain,
+            target: self,
+            action: #selector(addFileButtonDidTap)
+        )
+        navigationItem.rightBarButtonItems = [addFile, addFolder]
     }
     
-    @objc private func addButtonAction(button: UIButton) {
-        switch button {
-        case addDirectoryButton:
-            fileManagerService.addDirectory(name: "New Folder")
-            tableView.reloadData()
-            
-        case addFileButton:
-            fileManagerService.createFile(name: "On More Folder", content: "")
-            tableView.reloadData()
-            
-        default:
-            break
+    @objc private func addFolderButtonDidTap() {
+        let alert = UIAlertController(title: "Create folder", message: nil, preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            textField.placeholder = "Folder name"
         }
+
+        alert.addAction(
+            UIAlertAction(title: "Create", style: .default) { [weak alert, weak self] (_) in
+                guard let textField = alert?.textFields?.first else { return }
+                
+                self?.fileManagerService.addDirectory(name: textField.text ?? UUID().uuidString)
+                
+                self?.tableView.reloadData()
+            }
+        )
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @objc private func addFileButtonDidTap() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = false
+        picker.delegate = self
+        present(picker, animated: true)
     }
     
     private func layout() {
-        view.addSubview(addDirectoryButton)
-        view.addSubview(addFileButton)
         view.addSubview(tableView)
-        view.addSubview(nameLabel)
-        view.addSubview(textField)
-        view.addSubview(createLabel)
         
         NSLayoutConstraint.activate([
-            addDirectoryButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 300),
-            addDirectoryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            addDirectoryButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -8),
-            addDirectoryButton.heightAnchor.constraint(equalToConstant: 50),
-            
-            addFileButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 300),
-            addFileButton.leadingAnchor.constraint(equalTo: addDirectoryButton.trailingAnchor, constant: 16),
-            addFileButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            addFileButton.heightAnchor.constraint(equalToConstant: 50),
-            
-            tableView.topAnchor.constraint(equalTo: addDirectoryButton.bottomAnchor, constant: 10),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            createLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 160),
-            createLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            createLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-        
-            textField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 180),
-            textField.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            textField.heightAnchor.constraint(equalToConstant: 34),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }
@@ -156,8 +101,12 @@ extension ListViewController: UITableViewDataSource {
         let cell = UITableViewCell()
         var content = cell.defaultContentConfiguration()
         content.text = fileManagerService.items[indexPath.row]
-        content.secondaryText = fileManagerService.isDirectoryAtIndex(indexPath.row) ? "Папка" : "Файл"
+        
+        let isFolder = fileManagerService.isDirectoryAtIndex(indexPath.row)
+        
+        content.secondaryText = isFolder ? "Папка" : "Файл"
         cell.contentConfiguration = content
+        cell.accessoryType = isFolder ? .disclosureIndicator : .none
         return cell
     }
 }
@@ -171,9 +120,29 @@ extension ListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard fileManagerService.isDirectoryAtIndex(indexPath.row) else { return }
+        
         let path = fileManagerService.getPath(at: indexPath.row)
         let fileManagerService = FileManagerService(pathForFolder: path)
         let nextListViewController = ListViewController(fileManagerService: fileManagerService)
         navigationController?.pushViewController(nextListViewController, animated: true)
+    }
+}
+
+extension ListViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        guard
+            let image = info[.originalImage] as? UIImage,
+            let pngData = image.pngData()
+        else { return }
+
+        fileManagerService.createFile(name: "\(UUID().uuidString).png", content: pngData)
+        
+        tableView.reloadData()
+        dismiss(animated: true)
     }
 }
