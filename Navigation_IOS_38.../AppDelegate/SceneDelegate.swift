@@ -20,10 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: scene)
         
-        window.rootViewController = createFileManagerViewController()
+        window.rootViewController = createFireBaseLoginViewController()
         window.makeKeyAndVisible()
         self.window = window
-        
     }
     
     private func createFileManagerViewController() -> UIViewController {
@@ -31,7 +30,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let controller = ListViewController(fileManagerService: fileManagerService)
         controller.tabBarItem = UITabBarItem(title: "Documents", image: UIImage(systemName: "Image 1"), tag: 0)
         let navigationController = UINavigationController(rootViewController: controller)
+        
+        return navigationController
+    }
     
+    private func createToDoListViewController() -> UIViewController {
+        let toDoService = ToDoService()
+        let controller = ToDoListViewController(toDoService: toDoService)
+        let navigationController = UINavigationController(rootViewController: controller)
+        
         return navigationController
     }
     
@@ -65,6 +72,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         return UINavigationController(rootViewController: loginViewController)
     }
+    
     
     private func createTabBarController() -> UITabBarController {
         

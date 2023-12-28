@@ -133,11 +133,17 @@ final class FireBaseLoginViewController: UIViewController {
             return showAlert(title: "Ошибка!", message: "Не введены поля")
         }
         
-        service.checkCredentials(email: login, password: password) { [weak self] isSuccess in
-            if isSuccess {
-                self?.showAlert(title: "Успешно!", message: "Пользователь залогинен")
+        service.checkCredentials(email: login, password: password) { [weak self] user in
+            // Если все прошло успешно, то создаем экран с полученным User и показываем
+            if let user {
                 self?.emailTextField.text = nil
                 self?.passwordTextField.text = nil
+
+                let profileViewController = ProfileViewController(
+                    user: user,
+                    viewModel: ProfileVMImp()
+                )
+                self?.navigationController?.setViewControllers([profileViewController], animated: true)
             } else {
                 self?.showAlert(title: "Ошибка!", message: "Такого пользователя не существует")
             }
@@ -154,11 +160,17 @@ final class FireBaseLoginViewController: UIViewController {
             return showAlert(title: "Ошибка!", message: "Не введены поля")
         }
         
-        service.signUp(email: login, password: password) { [weak self] isSuccess in
-            if isSuccess {
-                self?.showAlert(title: "Успешно!", message: "Пользователь зарегистрирован")
+        service.signUp(email: login, password: password) { [weak self] user in
+            // Если все прошло успешно, то создаем экран с полученным User и показываем
+            if let user {
                 self?.emailTextField.text = nil
                 self?.passwordTextField.text = nil
+                
+                let profileViewController = ProfileViewController(
+                    user: user,
+                    viewModel: ProfileVMImp()
+                )
+                self?.navigationController?.setViewControllers([profileViewController], animated: true)
             } else {
                 self?.showAlert(title: "Ошибка!", message: "Ошибка на стороне FireBase")
             }

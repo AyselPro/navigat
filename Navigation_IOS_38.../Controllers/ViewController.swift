@@ -9,54 +9,14 @@ import UIKit
 import SnapKit
 import  iOSIntPackage
 
-class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController {
     
-    private let checkerService = CheckerService()
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
-
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableSupplementaryView( ofKind: "", withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
-            fatalError("Unable to dequeue PersonCell.")
-        }
-        return cell
-    }
-    
-    @objc func addNewPerson() {
-       let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    guard let image = info[.editedImage] as? UIImage else { return }
-    
-    let imageName = UUID().uuidString
-    let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
-    
-    if let jpegData = image.jpegData(compressionQuality: 0.8) {
-        try? jpegData.write(to: imagePath)
-    }
-    
-    dismiss(animated: true)
     }
 
-    func getDocumentsDirectory() -> URL {
-       let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-       return paths[0]
-    }
-    
     private func initialize() {
         view.backgroundColor = UIColor(red: 241/255, green: 238/255, blue: 228/255, alpha: 1)
         

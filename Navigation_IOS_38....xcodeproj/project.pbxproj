@@ -23,7 +23,13 @@
 		F97A0FB02B12A34000B1B35C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F97A0FAF2B12A34000B1B35C /* Assets.xcassets */; };
 		F97A0FB32B12A34000B1B35C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F97A0FB12B12A34000B1B35C /* LaunchScreen.storyboard */; };
 		F98EF6BD2B3987720025287E /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = F98EF6BC2B3987720025287E /* iOSIntPackage */; };
-		F98EF6BF2B399BEB0025287E /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EF6BE2B399BEB0025287E /* PersonCell.swift */; };
+		F98EF6C22B3B4A2A0025287E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F98EF6C12B3B4A2A0025287E /* Realm */; };
+		F98EF6C42B3B4A2A0025287E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F98EF6C32B3B4A2A0025287E /* RealmSwift */; };
+		F98EF6C62B3B4A610025287E /* ToDoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EF6C52B3B4A610025287E /* ToDoModel.swift */; };
+		F98EF6C82B3B4D9F0025287E /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EF6C72B3B4D9F0025287E /* ToDoService.swift */; };
+		F98EF6CA2B3C20BC0025287E /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EF6C92B3C20BC0025287E /* ToDoListViewController.swift */; };
+		F98EF6CC2B3C4C610025287E /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EF6CB2B3C4C610025287E /* ItemsViewController.swift */; };
+		F98EF6CE2B3C58F00025287E /* ItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EF6CD2B3C58F00025287E /* ItemService.swift */; };
 		F9A215A62B2328B200B90D9D /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215A52B2328B200B90D9D /* FeedViewModel.swift */; };
 		F9A215A82B23A37700B90D9D /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215A72B23A37700B90D9D /* Planet.swift */; };
 		F9A215B12B26FE5100B90D9D /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A215B02B26FE5100B90D9D /* BaseCoordinator.swift */; };
@@ -114,7 +120,11 @@
 		F97A0FAF2B12A34000B1B35C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F97A0FB22B12A34000B1B35C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F97A0FB42B12A34000B1B35C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F98EF6BE2B399BEB0025287E /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
+		F98EF6C52B3B4A610025287E /* ToDoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoModel.swift; sourceTree = "<group>"; };
+		F98EF6C72B3B4D9F0025287E /* ToDoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
+		F98EF6C92B3C20BC0025287E /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
+		F98EF6CB2B3C4C610025287E /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
+		F98EF6CD2B3C58F00025287E /* ItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemService.swift; sourceTree = "<group>"; };
 		F9A215A52B2328B200B90D9D /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		F9A215A72B23A37700B90D9D /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		F9A215B02B26FE5100B90D9D /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
@@ -168,7 +178,9 @@
 				F9C8609E2B31FB9600D40587 /* FirebaseFirestore in Frameworks */,
 				F9C860A22B31FB9600D40587 /* FirebaseStorage in Frameworks */,
 				F9C8609C2B31FB9600D40587 /* FirebaseAuth in Frameworks */,
+				F98EF6C22B3B4A2A0025287E /* Realm in Frameworks */,
 				F9C860A02B31FB9600D40587 /* FirebaseFirestoreSwift in Frameworks */,
+				F98EF6C42B3B4A2A0025287E /* RealmSwift in Frameworks */,
 				F98EF6BD2B3987720025287E /* iOSIntPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +244,7 @@
 		F97A0FA52B12A33F00B1B35C /* Navigation_IOS_38... */ = {
 			isa = PBXGroup;
 			children = (
-				F98EF6B52B388E650025287E /* Protocol */,
+				F98EF6B52B388E650025287E /* REALM */,
 				F9337B612B33382600F40D61 /* Facade */,
 				F9A215A22B23166C00B90D9D /* MVC */,
 				F9BBDAA22B209B4D0053A2A0 /* Services */,
@@ -249,11 +261,12 @@
 			path = Navigation_IOS_38...;
 			sourceTree = "<group>";
 		};
-		F98EF6B52B388E650025287E /* Protocol */ = {
+		F98EF6B52B388E650025287E /* REALM */ = {
 			isa = PBXGroup;
 			children = (
+				F98EF6C52B3B4A610025287E /* ToDoModel.swift */,
 			);
-			path = Protocol;
+			path = REALM;
 			sourceTree = "<group>";
 		};
 		F9A215A22B23166C00B90D9D /* MVC */ = {
@@ -339,6 +352,8 @@
 				F9C860922B2F586B00D40587 /* CheckerService.swift */,
 				F957D2DE2B3452DC005A78F0 /* FileManagerService.swift */,
 				F957D2E02B34B68C005A78F0 /* FileManagerServiceProtocol.swift */,
+				F98EF6C72B3B4D9F0025287E /* ToDoService.swift */,
+				F98EF6CD2B3C58F00025287E /* ItemService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -394,7 +409,6 @@
 				F9F65CE02B12AE8D00F98457 /* PhotosTableViewCell.swift */,
 				F9F65CE22B12AEB500F98457 /* PhotoTableViewCell.swift */,
 				F9F65CE42B12AEEA00F98457 /* PhotosCollectionViewCell.swift */,
-				F98EF6BE2B399BEB0025287E /* PersonCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -410,6 +424,8 @@
 				F9F65CEF2B12B01D00F98457 /* PhotosViewController.swift */,
 				F97780262B36FF25007E05D5 /* ListViewController.swift */,
 				878427082B3B017300B4ED96 /* FireBaseLoginViewController.swift */,
+				F98EF6C92B3C20BC0025287E /* ToDoListViewController.swift */,
+				F98EF6CB2B3C4C610025287E /* ItemsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -467,6 +483,8 @@
 				F9C860A12B31FB9600D40587 /* FirebaseStorage */,
 				F9C860A32B31FB9600D40587 /* FirebaseStorageCombine-Community */,
 				F98EF6BC2B3987720025287E /* iOSIntPackage */,
+				F98EF6C12B3B4A2A0025287E /* Realm */,
+				F98EF6C32B3B4A2A0025287E /* RealmSwift */,
 			);
 			productName = Navigation_IOS_38...;
 			productReference = F97A0FA32B12A33F00B1B35C /* Navigation_IOS_38....app */;
@@ -521,6 +539,7 @@
 				F9F65D0A2B12B11900F98457 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				F9C8609A2B31FB9600D40587 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F98EF6BB2B3987720025287E /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+				F98EF6C02B3B4A2A0025287E /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = F97A0FA42B12A33F00B1B35C /* Products */;
 			projectDirPath = "";
@@ -570,6 +589,7 @@
 				5CDAC83D2B248E6600B9C5E2 /* TestUser.swift in Sources */,
 				F97A0FAB2B12A33F00B1B35C /* ViewController.swift in Sources */,
 				F9F65CF52B12B07700F98457 /* ProfileHeaderView.swift in Sources */,
+				F98EF6CE2B3C58F00025287E /* ItemService.swift in Sources */,
 				F9F65CBE2B12A51100F98457 /* Checker.swift in Sources */,
 				F9F65CE52B12AEEA00F98457 /* PhotosCollectionViewCell.swift in Sources */,
 				F9A215D72B28543A00B90D9D /* FeedDetailVM.swift in Sources */,
@@ -581,15 +601,19 @@
 				F9C860AF2B3312B800D40587 /* ImageLibrarySubscriber.swift in Sources */,
 				F90C20032B1DFC78001C23F3 /* TextField.swift in Sources */,
 				F9F65CBC2B12A46F00F98457 /* TestUserService.swift in Sources */,
+				F98EF6C82B3B4D9F0025287E /* ToDoService.swift in Sources */,
 				F9F65CDF2B12AE5200F98457 /* PostTableViewCell.swift in Sources */,
 				F9A215CB2B27436600B90D9D /* ProfileDetailVM.swift in Sources */,
 				F9A215BB2B27193B00B90D9D /* ProfileVM.swift in Sources */,
+				F98EF6CC2B3C4C610025287E /* ItemsViewController.swift in Sources */,
 				F9F65CF32B12B05300F98457 /* ProfileViewController.swift in Sources */,
 				F9A215DA2B28547A00B90D9D /* FeedVM.swift in Sources */,
 				F957D2E12B34B68C005A78F0 /* FileManagerServiceProtocol.swift in Sources */,
 				F9A215A62B2328B200B90D9D /* FeedViewModel.swift in Sources */,
+				F98EF6CA2B3C20BC0025287E /* ToDoListViewController.swift in Sources */,
 				F9F65CDA2B12AD8B00F98457 /* String-Ext.swift in Sources */,
 				F9F65CD52B12AC8300F98457 /*  UICollectionViewCell.swift in Sources */,
+				F98EF6C62B3B4A610025287E /* ToDoModel.swift in Sources */,
 				F9F65CD12B12AC3F00F98457 /* UIView-Ext.swift in Sources */,
 				F9F65CC12B12A54500F98457 /* Post.swift in Sources */,
 				F9C860AB2B32F2C100D40587 /* ImagePublisherFacade.swift in Sources */,
@@ -604,7 +628,6 @@
 				F9F65CEA2B12AFC100F98457 /* InfoViewController.swift in Sources */,
 				F9A215D22B27545B00B90D9D /* ProfileDetailVC.swift in Sources */,
 				F9A215B12B26FE5100B90D9D /* BaseCoordinator.swift in Sources */,
-				F98EF6BF2B399BEB0025287E /* PersonCell.swift in Sources */,
 				F9A215D52B2853D600B90D9D /* FeedDetailVC.swift in Sources */,
 				F9A215A82B23A37700B90D9D /* Planet.swift in Sources */,
 				F957D2DF2B3452DC005A78F0 /* FileManagerService.swift in Sources */,
@@ -911,6 +934,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		F98EF6C02B3B4A2A0025287E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		F9C8609A2B31FB9600D40587 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -934,6 +965,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F98EF6BB2B3987720025287E /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
 			productName = iOSIntPackage;
+		};
+		F98EF6C12B3B4A2A0025287E /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F98EF6C02B3B4A2A0025287E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		F98EF6C32B3B4A2A0025287E /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F98EF6C02B3B4A2A0025287E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		F9C8609B2B31FB9600D40587 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
