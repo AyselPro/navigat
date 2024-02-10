@@ -5,6 +5,7 @@
 //  Created by Aysel on 05.10.2023.
 //
 import FirebaseAuth
+import KeychainAccess
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -14,15 +15,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let scene = (scene as? UIWindowScene) else { return }
-        
+       
         let appConfiguration: AppConfiguration = AppConfiguration.notFound
         NetworkService.request(for: appConfiguration)
         
+        let locationViewController = LocationViewController()
+        let navigationController = UINavigationController(rootViewController: locationViewController)
+        
         let window = UIWindow(windowScene: scene)
         
-        window.rootViewController = createFireBaseLoginViewController()
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
+    }
+    
+    private func authViewController() -> UIViewController {
+        let authVC = AuthViewController(delegate: self, keychainService: Keychain())
+        return authVC
+    }
+    
+    private func jokesViewController() -> UIViewController {
+        let tabBarVC = UITabBarController()
+        let service = JokeStorageServiceImpl()
+        let randomVC = RandomJokeViewController(
+            networkService: JokeNetworkServiceImpl(),
+            storageService: service
+        )
+        let sortedJokesByTimeVC = JokesViewController(storageService: service)
+        let groupedJokesByCategoriesVC = UINavigationController(
+            rootViewController: JokesCategoriesViewController(storageService: service)
+        )
+        
+        tabBarVC.setViewControllers([randomVC, sortedJokesByTimeVC, groupedJokesByCategoriesVC], animated: false)
+        
+        return tabBarVC
     }
     
     private func createFileManagerViewController() -> UIViewController {
@@ -40,6 +66,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController(rootViewController: controller)
         
         return navigationController
+    }
+    
+    private func createSettingsViewController() -> UIViewController {
+        return SettingsViewController(userDefaults: .standard, keychainService: Keychain())
     }
     
     private func createFeedViewController() -> UINavigationController {
@@ -73,6 +103,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return UINavigationController(rootViewController: loginViewController)
     }
     
+    private func createPostListViewController() -> UINavigationController {
+        let postService = PostService()
+        let controller = PostListViewController(postService: postService as! IPostService)
+        let navigationController = UINavigationController(rootViewController: controller)
+        
+        return navigationController
+    }
     
     private func createTabBarController() -> UITabBarController {
         
@@ -107,5 +144,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        PostListService.shared.saveContext()
+    }
+}
+
+extension SceneDelegate: AuthViewControllerDelegate {
+    func flowDidFinish() {
+        let fileManagerVC = createFileManagerViewController()
+        let settingsVC = createSettingsViewController()
+        let tabBarViewController = UITabBarController()
+        tabBarViewController.setViewControllers([fileManagerVC, settingsVC], animated: true)
+        
+        window?.rootViewController = tabBarViewController
     }
 }
