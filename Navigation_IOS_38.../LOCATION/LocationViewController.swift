@@ -115,7 +115,7 @@ class  LocationViewController: UIViewController {
     }
 }
 
-extension  LocationViewController: CLLocationManagerDelegate {
+extension LocationViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(
         _ manager: CLLocationManager
@@ -151,3 +151,4 @@ extension  LocationViewController: CLLocationManagerDelegate {
         // Handle failure to get a user’s location
     }
 }
+

@@ -282,6 +282,15 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		F9264A512B7ACF36008FB5B7 /* LOCATION */ = {
+			isa = PBXGroup;
+			children = (
+				F9E1EE862B753E0100520BE5 /* LocationViewController.swift */,
+				F9E1EEAA2B762AF500520BE5 /* CapitalAnnotation.swift */,
+			);
+			path = LOCATION;
+			sourceTree = "<group>";
+		};
 		F9337B612B33382600F40D61 /* Facade */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +321,7 @@
 		F97A0FA52B12A33F00B1B35C /* Navigation_IOS_38... */ = {
 			isa = PBXGroup;
 			children = (
+				F9264A512B7ACF36008FB5B7 /* LOCATION */,
 				F910F3902B3DBF7B00D588F4 /* CoreData */,
 				F98EF6B52B388E650025287E /* Realm */,
 				F9337B612B33382600F40D61 /* Facade */,
@@ -327,8 +337,6 @@
 				F9F65CCD2B12AB3C00F98457 /* Model */,
 				F9F65CCF2B12ABEB00F98457 /* Extensions */,
 				F910F38B2B3DBB4E00D588F4 /* Model.xcdatamodeld */,
-				F9E1EE862B753E0100520BE5 /* LocationViewController.swift */,
-				F9E1EEAA2B762AF500520BE5 /* CapitalAnnotation.swift */,
 			);
 			path = Navigation_IOS_38...;
 			sourceTree = "<group>";
@@ -882,7 +890,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation_IOS_38.../Support/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please give permissons";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Используем геопозицию для лучшей работы приложения";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Используем геопозицию для лучшей работы приложения";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Используем геопозицию для лучшей работы приложения";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -909,7 +919,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation_IOS_38.../Support/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please give permissons";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Используем геопозицию для лучшей работы приложения";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Используем геопозицию для лучшей работы приложения";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Используем геопозицию для лучшей работы приложения";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

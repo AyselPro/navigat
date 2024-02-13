@@ -51,13 +51,12 @@ extension CapitalAnnotation {
                 info: "столица России"
             ),
             .init(
-                title: "Санкт-Петербург",
+                title: "Осло",
                 coordinate: CLLocationCoordinate2D(
-                    latitude: 59.9386,
-                    longitude: 30.3141
-                    
+                    latitude: 59.95,
+                    longitude: 10.75
                 ),
-                info: "Самое популярное место в Санкт-Петербурге - Эрмитаж и Дворцовая площадь"
+                info: "Самое популярное в Осло имя — Мухаммед"
             ),
             .init(
                 title: "Париж",
