@@ -14,6 +14,26 @@ final class ProfileHeaderView: UIView {
     private lazy var setStatusButton = CustomButton(titleText: "Set status", titleColor: UIColor.white, backgroundColor: .systemBlue, tapAction: buttonPressed)
     private let statusTextField = UITextField()
     
+    private let statusTextFieldBackgroundLayer: CALayer = {
+
+        let statusTextFieldBackgroundLayer = CALayer()
+        
+        statusTextFieldBackgroundLayer.masksToBounds = true
+        statusTextFieldBackgroundLayer.borderWidth = 1.0
+        statusTextFieldBackgroundLayer.cornerRadius = 12.0
+
+        return statusTextFieldBackgroundLayer
+    }()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .lightGray
@@ -27,6 +47,17 @@ final class ProfileHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         setupCornerRadius()
+  
+        statusTextFieldBackgroundLayer.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: statusTextField.bounds.width,
+            height: statusTextField.bounds.height
+        )
+
+        statusTextFieldBackgroundLayer.backgroundColor = UIColor.headerTextFieldBackround.cgColor
+        statusTextFieldBackgroundLayer.borderColor = UIColor.headerTextFieldBorder.cgColor
+        setStatusButton.layer.shadowColor = UIColor.headerStatusButtonShadow.cgColor
     }
     
     private func setupCornerRadius() {
@@ -52,6 +83,8 @@ final class ProfileHeaderView: UIView {
     
     
     private func setupView() {
+        backgroundColor = .headerBackground
+
         self.addSubviews(avatarImageView, fullNameLabel, statusLabel, statusTextField, setStatusButton)
         
         avatarImageView.layer.borderColor = UIColor.white.cgColor
@@ -61,11 +94,11 @@ final class ProfileHeaderView: UIView {
         
         fullNameLabel.text = "Hipster Cat"
         fullNameLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        fullNameLabel.textColor = .black
+        fullNameLabel.textColor = .headerNameLabel
         
         statusLabel.text = "Waiting for something..."
         statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        statusLabel.textColor = .gray
+        statusLabel.textColor = .headerStatusLabel
         statusLabel.numberOfLines = 0
         
         setStatusButton.setTitleColor(UIColor.red, for: .focused)
@@ -74,6 +107,7 @@ final class ProfileHeaderView: UIView {
         
         statusTextField.borderStyle = .roundedRect
         statusTextField.placeholder = "Set your status..."
+        statusTextField.textColor = .headerTextFieldText
     }
         
     private func setupConstraint() {

@@ -21,6 +21,8 @@
 		874F0C1B2B44289400241E64 /* JokesForCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874F0C1A2B44289400241E64 /* JokesForCategoriesViewController.swift */; };
 		878427092B3B017300B4ED96 /* FireBaseLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878427082B3B017300B4ED96 /* FireBaseLoginViewController.swift */; };
 		8784270A2B3B102C00B4ED96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9C860902B2F544400D40587 /* GoogleService-Info.plist */; };
+		87F4E7632B93336300739AA4 /* LocalAuthViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4E7622B93336300739AA4 /* LocalAuthViewContoller.swift */; };
+		87F4E7652B9339CB00739AA4 /* LocalAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4E7642B9339CB00739AA4 /* LocalAuthenticationService.swift */; };
 		F90C1FF92B1DD75E001C23F3 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90C1FF82B1DD75E001C23F3 /* FeedModel.swift */; };
 		F90C20012B1DD9DD001C23F3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90C20002B1DD9DD001C23F3 /* CustomButton.swift */; };
 		F90C20032B1DFC78001C23F3 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90C20022B1DFC78001C23F3 /* TextField.swift */; };
@@ -30,6 +32,8 @@
 		F910F3942B3DD9D300D588F4 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F910F3932B3DD9D300D588F4 /* PostService.swift */; };
 		F957D2DF2B3452DC005A78F0 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957D2DE2B3452DC005A78F0 /* FileManagerService.swift */; };
 		F957D2E12B34B68C005A78F0 /* FileManagerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957D2E02B34B68C005A78F0 /* FileManagerServiceProtocol.swift */; };
+		F9744C3F2B7F5712006999E9 /* CustomColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9744C3E2B7F5712006999E9 /* CustomColorViewController.swift */; };
+		F9744C412B7F59D7006999E9 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9744C402B7F59D7006999E9 /* CustomColor.swift */; };
 		F97780272B36FF25007E05D5 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97780262B36FF25007E05D5 /* ListViewController.swift */; };
 		F97A0FA72B12A33F00B1B35C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A0FA62B12A33F00B1B35C /* AppDelegate.swift */; };
 		F97A0FA92B12A33F00B1B35C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A0FA82B12A33F00B1B35C /* SceneDelegate.swift */; };
@@ -132,6 +136,8 @@
 		874F0C182B402A0B00241E64 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		874F0C1A2B44289400241E64 /* JokesForCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JokesForCategoriesViewController.swift; sourceTree = "<group>"; };
 		878427082B3B017300B4ED96 /* FireBaseLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseLoginViewController.swift; sourceTree = "<group>"; };
+		87F4E7622B93336300739AA4 /* LocalAuthViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthViewContoller.swift; sourceTree = "<group>"; };
+		87F4E7642B9339CB00739AA4 /* LocalAuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticationService.swift; sourceTree = "<group>"; };
 		F90C1FF82B1DD75E001C23F3 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		F90C20002B1DD9DD001C23F3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		F90C20022B1DFC78001C23F3 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -141,6 +147,8 @@
 		F910F3932B3DD9D300D588F4 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		F957D2DE2B3452DC005A78F0 /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		F957D2E02B34B68C005A78F0 /* FileManagerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerServiceProtocol.swift; sourceTree = "<group>"; };
+		F9744C3E2B7F5712006999E9 /* CustomColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorViewController.swift; sourceTree = "<group>"; };
+		F9744C402B7F59D7006999E9 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		F97780262B36FF25007E05D5 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F97A0FA32B12A33F00B1B35C /* Navigation_IOS_38....app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation_IOS_38....app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97A0FA62B12A33F00B1B35C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -300,6 +308,15 @@
 			path = Facade;
 			sourceTree = "<group>";
 		};
+		F9744C3B2B7F55AD006999E9 /* CustomColor */ = {
+			isa = PBXGroup;
+			children = (
+				F9744C3E2B7F5712006999E9 /* CustomColorViewController.swift */,
+				F9744C402B7F59D7006999E9 /* CustomColor.swift */,
+			);
+			path = CustomColor;
+			sourceTree = "<group>";
+		};
 		F97A0F9A2B12A33F00B1B35C = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +338,7 @@
 		F97A0FA52B12A33F00B1B35C /* Navigation_IOS_38... */ = {
 			isa = PBXGroup;
 			children = (
+				F9744C3B2B7F55AD006999E9 /* CustomColor */,
 				F9264A512B7ACF36008FB5B7 /* LOCATION */,
 				F910F3902B3DBF7B00D588F4 /* CoreData */,
 				F98EF6B52B388E650025287E /* Realm */,
@@ -439,6 +457,7 @@
 				F957D2E02B34B68C005A78F0 /* FileManagerServiceProtocol.swift */,
 				F98EF6C72B3B4D9F0025287E /* ToDoService.swift */,
 				F98EF6CD2B3C58F00025287E /* ItemService.swift */,
+				87F4E7642B9339CB00739AA4 /* LocalAuthenticationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -513,6 +532,7 @@
 				F98EF6CB2B3C4C610025287E /* ItemsViewController.swift */,
 				874F0C162B401FC400241E64 /* AuthViewController.swift */,
 				874F0C182B402A0B00241E64 /* SettingsViewController.swift */,
+				87F4E7622B93336300739AA4 /* LocalAuthViewContoller.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -685,6 +705,7 @@
 				F9F65CE52B12AEEA00F98457 /* PhotosCollectionViewCell.swift in Sources */,
 				F9A215D72B28543A00B90D9D /* FeedDetailVM.swift in Sources */,
 				F9C860932B2F586B00D40587 /* CheckerService.swift in Sources */,
+				87F4E7652B9339CB00739AA4 /* LocalAuthenticationService.swift in Sources */,
 				F97A0FA72B12A33F00B1B35C /* AppDelegate.swift in Sources */,
 				F9F65CBA2B12A43600F98457 /* CurrentUserService.swift in Sources */,
 				874F0C0A2B40098300241E64 /* JokeNetworkService.swift in Sources */,
@@ -698,6 +719,7 @@
 				F98EF6C82B3B4D9F0025287E /* ToDoService.swift in Sources */,
 				F9F65CDF2B12AE5200F98457 /* PostTableViewCell.swift in Sources */,
 				F9A215CB2B27436600B90D9D /* ProfileDetailVM.swift in Sources */,
+				F9744C412B7F59D7006999E9 /* CustomColor.swift in Sources */,
 				F9A215BB2B27193B00B90D9D /* ProfileVM.swift in Sources */,
 				F98EF6CC2B3C4C610025287E /* ItemsViewController.swift in Sources */,
 				F9F65CF32B12B05300F98457 /* ProfileViewController.swift in Sources */,
@@ -721,6 +743,8 @@
 				874F0C102B400D9800241E64 /* JokeStorageService.swift in Sources */,
 				F9BBDAA42B209B6E0053A2A0 /* NetworkService.swift in Sources */,
 				F9F65CD32B12AC6300F98457 /* UITableViewCell-Ext.swift in Sources */,
+				F9744C3F2B7F5712006999E9 /* CustomColorViewController.swift in Sources */,
+				87F4E7632B93336300739AA4 /* LocalAuthViewContoller.swift in Sources */,
 				F9E1EE872B753E0100520BE5 /* LocationViewController.swift in Sources */,
 				F97780272B36FF25007E05D5 /* ListViewController.swift in Sources */,
 				F9A215B52B270B2D00B90D9D /* FeedCoordinator.swift in Sources */,
@@ -897,6 +921,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -926,6 +951,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -11,24 +11,39 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-
+    var coordinator: LoginCoordinator?
+    
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
+//        var coordinator: LoginCoordinator?
+//        coordinator = LoginCoordinator()
+//        coordinator?.start()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+    
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
        
         let appConfiguration: AppConfiguration = AppConfiguration.notFound
         NetworkService.request(for: appConfiguration)
         
-        let locationViewController = LocationViewController()
-        let navigationController = UINavigationController(rootViewController: locationViewController)
-        window.rootViewController = navigationController
+        window.rootViewController = locationViewController()
         self.window = window
 
         window.makeKeyAndVisible()
+    }
+    
+    private func locationViewController() -> UIViewController {
+        let locationViewController = LocationViewController()
+        let navigationController = UINavigationController(rootViewController: locationViewController)
+        return navigationController
+    }
+    
+    private func localAuthViewController() -> UIViewController {
+        LocalAuthViewController(authService: LocalAuthenticationServiceImpl())
     }
     
     private func authViewController() -> UIViewController {

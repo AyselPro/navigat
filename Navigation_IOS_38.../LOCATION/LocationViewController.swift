@@ -9,7 +9,9 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class  LocationViewController: UIViewController {
+class LocationViewController: UIViewController {
+    
+    private let cancelButton = UIButton()
     
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
@@ -21,6 +23,7 @@ class  LocationViewController: UIViewController {
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         
+        mapView.delegate = self
         mapView.translatesAutoresizingMaskIntoConstraints = false
         
         mapView.mapType = .standard
@@ -69,9 +72,6 @@ class  LocationViewController: UIViewController {
         setupConstraints()
         
         findUserLocation()
-        
-//        MKGeoJSONDecoder
-//        CLGeocoder
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -81,13 +81,40 @@ class  LocationViewController: UIViewController {
     }
     
     // MARK: - Private
+    @objc private func mapDidTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        if gestureRecognizer.state == .ended {
+            let locationInView = gestureRecognizer.location(in: mapView)
+            let pointCoordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = pointCoordinate
+            
+            mapView.addAnnotation(annotation)
+        }
+    }
+    
+    @objc private func cancelButtonDidTapped() {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
+    }
     
     private func setupSubviews() {
         setupMapView()
+        setupButton()
     }
     
     private func setupMapView() {
         view.addSubview(mapView)
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mapDidTapped))
+        mapView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    private func setupButton() {
+        view.addSubview(cancelButton)
+        cancelButton.tintColor = .white
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false 
+        cancelButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancelButtonDidTapped), for: .touchUpInside)
     }
     
     private func setupConstraints() {
@@ -106,12 +133,51 @@ class  LocationViewController: UIViewController {
             mapView.bottomAnchor.constraint(
                 equalTo: safeAreaGuide.bottomAnchor
             ),
+            
+            cancelButton.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 5),
+            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
         ])
     }
     
     private func findUserLocation() {
         locationManager.requestAlwaysAuthorization()
         locationManager.delegate = self
+    }
+    
+    private func createRoute(to destinationCoordinate: CLLocationCoordinate2D) {
+        guard let userLocation = mapView.userLocation.location?.coordinate else { return }
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: userLocation))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
+        request.transportType = .walking
+        
+        let directions = MKDirections(request: request)
+        directions.calculate { [weak self] response, error in
+            guard let route = response?.routes.first else {
+                return
+            }
+            
+            self?.mapView.addOverlay(route.polyline, level: .aboveRoads)
+        }
+    }
+}
+
+extension LocationViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let coordinate = view.annotation?.coordinate else { return }
+        
+        createRoute(to: coordinate)
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKPolyline {
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.lineWidth = 3
+            renderer.strokeColor = .systemBlue
+            return renderer
+        }
+        return MKOverlayRenderer()
     }
 }
 

@@ -16,10 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         FirebaseApp.configure()
+        
+      //  var window: UIWindow?
+      //  var coordinator: LoginCoordinator?
+        
+      //  window = UIWindow(frame: UIScreen.main.bounds)
+      //  coordinator = LoginCoordinator()
+      //  coordinator?.start()
     
         return true
+
     }
-    
+
     // MARK: UISceneSession Lifecycle
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
