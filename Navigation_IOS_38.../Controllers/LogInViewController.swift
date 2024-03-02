@@ -150,6 +150,18 @@ final class LogInViewController: UIViewController {
         print(type(of: delegate))
     }
     
+    private func setupUI() {
+        
+        navigationController?.navigationBar.isHidden = true
+        
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            view.backgroundColor = .white
+        }
+    }
+    
     private func setupConstraints() {
         let content = UIView()
         let scrollView = UIScrollView()
